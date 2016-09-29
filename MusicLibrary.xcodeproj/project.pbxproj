@@ -14,6 +14,7 @@
 		9C192A691D9C6B1A00B6D77A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C192A671D9C6B1A00B6D77A /* LaunchScreen.storyboard */; };
 		9C192A741D9C6B1A00B6D77A /* MusicLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A731D9C6B1A00B6D77A /* MusicLibraryTests.swift */; };
 		9C192A7F1D9C6B1A00B6D77A /* MusicLibraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */; };
+		9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		9C192A7A1D9C6B1A00B6D77A /* MusicLibraryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicLibraryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryUITests.swift; sourceTree = "<group>"; };
 		9C192A801D9C6B1A00B6D77A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */,
+				9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */,
 				9C192A601D9C6B1A00B6D77A /* ViewController.swift */,
 				9C192A621D9C6B1A00B6D77A /* Main.storyboard */,
 				9C192A651D9C6B1A00B6D77A /* Assets.xcassets */,
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C192A611D9C6B1A00B6D77A /* ViewController.swift in Sources */,
+				9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */,
 				9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
