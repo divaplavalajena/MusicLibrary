@@ -15,6 +15,8 @@
 		9C192A741D9C6B1A00B6D77A /* MusicLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A731D9C6B1A00B6D77A /* MusicLibraryTests.swift */; };
 		9C192A7F1D9C6B1A00B6D77A /* MusicLibraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */; };
 		9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */; };
+		9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A8E1D9DA01A00B6D77A /* Constants.swift */; };
+		9C192A941DA2CAEF00B6D77A /* MusicBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A931DA2CAEF00B6D77A /* MusicBook.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryUITests.swift; sourceTree = "<group>"; };
 		9C192A801D9C6B1A00B6D77A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
+		9C192A8E1D9DA01A00B6D77A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9C192A931DA2CAEF00B6D77A /* MusicBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicBook.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +104,9 @@
 			isa = PBXGroup;
 			children = (
 				9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */,
-				9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */,
-				9C192A601D9C6B1A00B6D77A /* ViewController.swift */,
-				9C192A621D9C6B1A00B6D77A /* Main.storyboard */,
-				9C192A651D9C6B1A00B6D77A /* Assets.xcassets */,
-				9C192A671D9C6B1A00B6D77A /* LaunchScreen.storyboard */,
-				9C192A6A1D9C6B1A00B6D77A /* Info.plist */,
+				9C192A901D9DA02300B6D77A /* Model */,
+				9C192A921D9DA04300B6D77A /* Controller */,
+				9C192A911D9DA03800B6D77A /* Assets */,
 			);
 			path = MusicLibrary;
 			sourceTree = "<group>";
@@ -126,6 +127,35 @@
 				9C192A801D9C6B1A00B6D77A /* Info.plist */,
 			);
 			path = MusicLibraryUITests;
+			sourceTree = "<group>";
+		};
+		9C192A901D9DA02300B6D77A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */,
+				9C192A8E1D9DA01A00B6D77A /* Constants.swift */,
+				9C192A931DA2CAEF00B6D77A /* MusicBook.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9C192A911D9DA03800B6D77A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9C192A621D9C6B1A00B6D77A /* Main.storyboard */,
+				9C192A651D9C6B1A00B6D77A /* Assets.xcassets */,
+				9C192A671D9C6B1A00B6D77A /* LaunchScreen.storyboard */,
+				9C192A6A1D9C6B1A00B6D77A /* Info.plist */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		9C192A921D9DA04300B6D77A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9C192A601D9C6B1A00B6D77A /* ViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +298,8 @@
 				9C192A611D9C6B1A00B6D77A /* ViewController.swift in Sources */,
 				9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */,
 				9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */,
+				9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */,
+				9C192A941DA2CAEF00B6D77A /* MusicBook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
