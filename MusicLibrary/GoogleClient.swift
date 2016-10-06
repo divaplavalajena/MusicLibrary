@@ -14,12 +14,6 @@ import Foundation
 class GoogleClient : NSObject {
     
     // MARK: Properties
-    var dates = [Date]()
-    var dateIntervalFormatter = DateIntervalFormatter()
-    dateIntervalFormatter.dateStyle = NSDateIntervalFormatterShortStyle
-    var dateComponentsFormatter = DateComponentsFormatter()
-    dateComponentsFormatter.unitsStyle = .Full
-    
     
     // shared session
     var session = URLSession.shared
@@ -56,11 +50,9 @@ class GoogleClient : NSObject {
                 print(result)
                 
                 //How many items does the search return??
+                //TODO: If more than one item returned in search, give user option to choose which one to save in library
                 if let numberOfBooks = result?[GoogleClient.Constants.GoogleResponseKeys.TotalItems] as? Int {
                     print("*********  The number of books returned from ISBN search is: \(numberOfBooks)  ******************")
-                    
-                    //TODO: Create if statement that if there is more than one entry returned to use one with most recent publish by date
-                    //**************************        ***************************     **********************************
                     
                     if numberOfBooks > 1 {
                         
@@ -70,20 +62,19 @@ class GoogleClient : NSObject {
                             print(items)
                             
                             for book in items {
+                                //Use guard statements so they are all on the same level
+                                //initialize a dictionary and append values as we go
                                 if let googleBookID = book[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String {
                                     print("***************************  The 'googleBookID' returned in the search results  ***********************")
                                     print(googleBookID)
                                 
-                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject] {
+                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [[String:AnyObject]] {
                                         print("**************************  The 'singleBookVolumeInfo' returned in the search results  ***********************")
                                         print(singleBookVolumeInfo)
                                         
-                                        if let publishedDate = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String {
-                                            print("**********************************  The 'publishedDate' returned in the search results  ***********************")
-                                            print(publishedDate)
-                                            //convert date string to type date
-                                            dates.append(publishedDate)
-                                        }
+                                        let books = MusicBook.booksFromResults(singleBookVolumeInfo)
+                                        print(books)
+                                        
                                     }
                                 }
                             }
@@ -93,35 +84,6 @@ class GoogleClient : NSObject {
                 } else {
                     completionHandlerForGoogleSearch(nil, error)
                 }
-                
-                
-                /* GUARD: Is "items" key in our result? */
-                /*
-                if let booksInfoDictionaries = result?[GoogleClient.Constants.GoogleResponseKeys.Items] as? [[String:AnyObject]] {
-                    print("**********  The 'items' returned in the search results  ***********************")
-                    print(booksInfoDictionaries)
-                    
-                    //TODO: After if statement above finds one book for the ISBN, get the googleID and use that to iterate over info for book
-                    //**************************        ***************************     **********************************
-                    
-                    
-                    //need to store one more level of parsing - from volumeInfo tag in JSON
-                    //But also need to store google book ID for two books with same ISBN but different google ID's BUT -
-                    //  that happens BEFORE accessing volumeInfo
-                    //????????????
-                    /*
-                    // TODO: fix this below so correct object from parsed JSON data gets used for data
-                    let books = MusicBook.booksFromResults(booksInfoDictionaries)
-                    print("************* This is the info iterated over. *********")
-                    print(books)
-                    completionHandlerForGoogleSearch(books, nil)
-                    */
-                } else {
-                    //error if the parsing didn't provide good info to photosDictionary
-                    completionHandlerForGoogleSearch(nil, error)
-                }
-                */
-                */
             }
         }
     }
