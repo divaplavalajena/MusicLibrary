@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C12510E1DA689E9007BBCC5 /* DateComparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C12510D1DA689E9007BBCC5 /* DateComparable.swift */; };
 		9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */; };
 		9C192A611D9C6B1A00B6D77A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A601D9C6B1A00B6D77A /* ViewController.swift */; };
 		9C192A641D9C6B1A00B6D77A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C192A621D9C6B1A00B6D77A /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C12510D1DA689E9007BBCC5 /* DateComparable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateComparable.swift; sourceTree = "<group>"; };
 		9C192A5B1D9C6B1A00B6D77A /* MusicLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C192A601D9C6B1A00B6D77A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */,
+				9C12510D1DA689E9007BBCC5 /* DateComparable.swift */,
 				9C192A8E1D9DA01A00B6D77A /* Constants.swift */,
 				9C192A931DA2CAEF00B6D77A /* MusicBook.swift */,
 			);
@@ -298,6 +301,7 @@
 				9C192A611D9C6B1A00B6D77A /* ViewController.swift in Sources */,
 				9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */,
 				9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */,
+				9C12510E1DA689E9007BBCC5 /* DateComparable.swift in Sources */,
 				9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */,
 				9C192A941DA2CAEF00B6D77A /* MusicBook.swift in Sources */,
 			);
@@ -548,6 +552,7 @@
 				9C192A851D9C6B1A00B6D77A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C192A861D9C6B1A00B6D77A /* Build configuration list for PBXNativeTarget "MusicLibraryTests" */ = {
 			isa = XCConfigurationList;
@@ -556,6 +561,7 @@
 				9C192A881D9C6B1A00B6D77A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9C192A891D9C6B1A00B6D77A /* Build configuration list for PBXNativeTarget "MusicLibraryUITests" */ = {
 			isa = XCConfigurationList;
@@ -564,6 +570,7 @@
 				9C192A8B1D9C6B1A00B6D77A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

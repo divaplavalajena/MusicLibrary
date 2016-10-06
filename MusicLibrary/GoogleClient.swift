@@ -14,6 +14,13 @@ import Foundation
 class GoogleClient : NSObject {
     
     // MARK: Properties
+    var dates = [Date]()
+    var dateIntervalFormatter = DateIntervalFormatter()
+    dateIntervalFormatter.dateStyle = NSDateIntervalFormatterShortStyle
+    var dateComponentsFormatter = DateComponentsFormatter()
+    dateComponentsFormatter.unitsStyle = .Full
+    
+    
     // shared session
     var session = URLSession.shared
     
@@ -45,6 +52,8 @@ class GoogleClient : NSObject {
             if let error = error {
                 completionHandlerForGoogleSearch(nil, error)
             } else {
+                print("**************** Result of JSON parsing from taskToGetMethod before further parsing into objects  ***************************")
+                print(result)
                 
                 //How many items does the search return??
                 if let numberOfBooks = result?[GoogleClient.Constants.GoogleResponseKeys.TotalItems] as? Int {
@@ -54,35 +63,31 @@ class GoogleClient : NSObject {
                     //**************************        ***************************     **********************************
                     
                     if numberOfBooks > 1 {
-                        print("Does this line execute?")
                         
                         /* GUARD: Is "items" key in our result? */
-                        let booksInfoDictionaries = result?[GoogleClient.Constants.GoogleResponseKeys.Items] as? [[String:AnyObject]]
-                            print("**********  The 'items' returned in the search results  ***********************")
-                            print(booksInfoDictionaries)
+                        if let items = result?[GoogleClient.Constants.GoogleResponseKeys.Items] as? [[String:AnyObject]] {
+                            print("**********  The 'items' returned in booksInfoDictionaries  ***********************")
+                            print(items)
                             
-                            print("*************  Will this line execute?  ***********************")
-                            
-                            let googleBookID = booksInfoDictionaries?[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String
-                            print("**********  The 'googleBookID' returned in the search results  ***********************")
-                            print(googleBookID)
-
-                            
-                            let singleBookVolumeInfo = booksInfoDictionaries?[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject]
-                            print("**********  The 'singleBookVolumeInfo' returned in the search results  ***********************")
-                            print(singleBookVolumeInfo)
-                            
-                            
+                            for book in items {
+                                if let googleBookID = book[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String {
+                                    print("***************************  The 'googleBookID' returned in the search results  ***********************")
+                                    print(googleBookID)
                                 
-                                if let publishedDate = singleBookVolumeInfo?[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String {
-                                    print("**********  The 'publishedDate' returned in the search results  ***********************")
-                                    print(publishedDate)
-                                    
-                                    
-                                    
+                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject] {
+                                        print("**************************  The 'singleBookVolumeInfo' returned in the search results  ***********************")
+                                        print(singleBookVolumeInfo)
+                                        
+                                        if let publishedDate = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String {
+                                            print("**********************************  The 'publishedDate' returned in the search results  ***********************")
+                                            print(publishedDate)
+                                            //convert date string to type date
+                                            dates.append(publishedDate)
+                                        }
+                                    }
                                 }
-                                
-                        
+                            }
+                        }
                     }
                     
                 } else {
@@ -212,6 +217,11 @@ class GoogleClient : NSObject {
         }
         return Singleton.sharedInstance
     }
+    
+    
 
     
 }
+
+
+
