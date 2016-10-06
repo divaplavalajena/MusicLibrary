@@ -68,11 +68,12 @@ class GoogleClient : NSObject {
                                     print("***************************  The 'googleBookID' returned in the search results  ***********************")
                                     print(googleBookID)
                                 
-                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [[String:AnyObject]] {
+                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject] {
                                         print("**************************  The 'singleBookVolumeInfo' returned in the search results  ***********************")
                                         print(singleBookVolumeInfo)
                                         
-                                        let books = MusicBook.booksFromResults(singleBookVolumeInfo)
+                                        let books = MusicBook.booksFromResults([singleBookVolumeInfo])
+                                        print("**************************  The 'books' parsing into the class object returned this  ***********************")
                                         print(books)
                                         
                                     }

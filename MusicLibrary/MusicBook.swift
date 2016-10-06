@@ -17,11 +17,11 @@ struct MusicBook {
     //let googleID: String
     let title: String
     let subtitle: String?
-    let authors: String
-    let industryIdentifiers: [String: AnyObject]
+    let authors: [String]?
+    let industryIdentifiers: [[String: AnyObject]]?
     let printType: String?
     let pageCount: String?
-    let publisher: String
+    let publisher: String?
     let publishedDate: String?
     
     //let isbn10: String!
@@ -35,11 +35,11 @@ struct MusicBook {
     init(dictionary: [String:AnyObject]) {
         title = dictionary[GoogleClient.Constants.GoogleResponseKeys.Title] as! String
         subtitle = dictionary[GoogleClient.Constants.GoogleResponseKeys.Subtitle] as? String
-        authors = dictionary[GoogleClient.Constants.GoogleResponseKeys.Authors] as! String
-        industryIdentifiers = dictionary[GoogleClient.Constants.GoogleResponseKeys.IndustryIdentifiers] as! [String: AnyObject]
+        authors = dictionary[GoogleClient.Constants.GoogleResponseKeys.Authors] as? [String]
+        industryIdentifiers = dictionary[GoogleClient.Constants.GoogleResponseKeys.IndustryIdentifiers] as? [[String: AnyObject]]
         printType = dictionary[GoogleClient.Constants.GoogleResponseKeys.PrintType] as? String
         pageCount = dictionary[GoogleClient.Constants.GoogleResponseKeys.PageCount] as? String
-        publisher = dictionary[GoogleClient.Constants.GoogleResponseKeys.Publisher] as! String
+        publisher = dictionary[GoogleClient.Constants.GoogleResponseKeys.Publisher] as? String
         publishedDate = dictionary[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String
         
         //isbn10 = isbnFromDictionary(industryIdentifiers)
