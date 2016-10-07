@@ -14,6 +14,7 @@ import Foundation
 class GoogleClient : NSObject {
     
     // MARK: Properties
+    var bookInfoDictionary = [[String:AnyObject]]()
     
     // shared session
     var session = URLSession.shared
@@ -40,7 +41,6 @@ class GoogleClient : NSObject {
             
             /* 3. Send the desired value(s) to completion handler or print to console */
             func displayError(_ error: String) {
-                print("*****************   HERE IS THE ERROR FOR taskForGetMethod  ********************************")
                 print(error)
             }
             if let error = error {
@@ -51,40 +51,154 @@ class GoogleClient : NSObject {
                 
                 //How many items does the search return??
                 //TODO: If more than one item returned in search, give user option to choose which one to save in library
-                if let numberOfBooks = result?[GoogleClient.Constants.GoogleResponseKeys.TotalItems] as? Int {
-                    print("*********  The number of books returned from ISBN search is: \(numberOfBooks)  ******************")
+                guard let numberOfBooks = result?[GoogleClient.Constants.GoogleResponseKeys.TotalItems] as? Int else {
+                    displayError("Number of books - number of TotalItems not returned in JSON parsing of:   ********************")
+                    print(result)
+                    return
+                }
+                print("*********  The number of books returned from ISBN search is: \(numberOfBooks)  ******************")
+                
+                if numberOfBooks > 1 {
+                    /* GUARD: Is "items" key in our result? */
+                    guard let items = result?[GoogleClient.Constants.GoogleResponseKeys.Items] as? [[String:AnyObject]] else {
+                        displayError("***************   The 'items' NOT returned in the JSON data: ************************* ")
+                        print(result)
+                        return
+                    }
+                    print("**********  The 'items' returned in the JSON data ***********************")
+                    print(items)
                     
-                    if numberOfBooks > 1 {
+                    for book in items {
+                        guard let googleBookID = book[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String else {
+                            displayError("********************  The googleBookID was NOT found in the for loop of JSON data:  **************")
+                            print(book)
+                            return
+                        }
+                        print("***************************  The 'googleBookID' returned in the search results  ***********************")
+                        print(googleBookID)
+                        self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.GoogleID : googleBookID as AnyObject])
                         
-                        /* GUARD: Is "items" key in our result? */
-                        if let items = result?[GoogleClient.Constants.GoogleResponseKeys.Items] as? [[String:AnyObject]] {
-                            print("**********  The 'items' returned in booksInfoDictionaries  ***********************")
-                            print(items)
-                            
-                            for book in items {
-                                //Use guard statements so they are all on the same level
-                                //initialize a dictionary and append values as we go
-                                if let googleBookID = book[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String {
-                                    print("***************************  The 'googleBookID' returned in the search results  ***********************")
-                                    print(googleBookID)
-                                
-                                    if let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject] {
-                                        print("**************************  The 'singleBookVolumeInfo' returned in the search results  ***********************")
-                                        print(singleBookVolumeInfo)
-                                        
-                                        let books = MusicBook.booksFromResults([singleBookVolumeInfo])
-                                        print("**************************  The 'books' parsing into the class object returned this  ***********************")
-                                        print(books)
-                                        
-                                    }
+                        guard let singleBookVolumeInfo = book[GoogleClient.Constants.GoogleResponseKeys.VolumeInfo] as? [String:AnyObject] else {
+                            displayError("**************************   The 'volumeInfo' in the next level of JSON data was NOT found:  *****************")
+                            print(book)
+                            return
+                        }
+                        print("**************************  The 'singleBookVolumeInfo' returned in the results  ***********************")
+                        print(singleBookVolumeInfo)
+                        
+                        guard let title = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Title] as? String else {
+                            displayError("**************************   The 'title' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                            return
+                        }
+                        print("**************************  The 'title' returned in the results  ***********************")
+                        print(title)
+                        self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.Title : title as AnyObject])
+                        
+                        if let subtitle = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Subtitle] as? String {
+                            print("**************************  The 'subtitle' returned in the results  ***********************")
+                            print(subtitle)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.Subtitle : subtitle as AnyObject])
+                        } else {
+                            displayError("**************************   The 'subtitle' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
+                        
+                        if let authors = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Authors] as? [String] {
+                            print("**************************  The 'authors' returned in the results  ***********************")
+                            print(authors)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.Authors : authors as AnyObject])
+                        } else {
+                            displayError("**************************   The 'authors' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
+                        
+                        guard let industryIdentifiers = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.IndustryIdentifiers] as? [[String: String]] else {
+                            displayError("**************************   The 'industryIdentifiers' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                            return
+                        }
+                        print("**************************  The 'industryIdentifiers' returned in the results  ***********************")
+                        print(industryIdentifiers)
+                        
+                        
+                        for isbn in industryIdentifiers  {
+                            if isbn[GoogleClient.Constants.GoogleResponseKeys.isbnType] == GoogleClient.Constants.GoogleResponseValues.typeISBN10 {
+                                if let isbn10 = isbn[GoogleClient.Constants.GoogleResponseKeys.isbnIndetifier] {
+                                    print("**************************  The 'isbn10' returned in the results  ***********************")
+                                    print(isbn10)
+                                    self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseValues.typeISBN10 : isbn10 as AnyObject])
+                                } else {
+                                    displayError("**************************   The 'isbn10' in the 'industryIdentifiers' level of JSON data was NOT found:  *****************")
                                 }
                             }
+                            
+                            if isbn[GoogleClient.Constants.GoogleResponseKeys.isbnType] ==
+                                GoogleClient.Constants.GoogleResponseValues.typeISBN13 {
+                                if let isbn13 = isbn[GoogleClient.Constants.GoogleResponseKeys.isbnIndetifier] {
+                                    print("**************************  The 'isbn13' returned in the results  ***********************")
+                                    print(isbn13)
+                                    self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseValues.typeISBN13 : isbn13 as AnyObject])
+                                } else {
+                                    displayError("**************************   The 'isbn13' in the 'industryIdentifiers' level of JSON data was NOT found:  *****************")
+                                }
+                            }
+                            
+                                
                         }
+                        
+                        /**
+                        for isbn in industryIdentifiers where isbn[GoogleClient.Constants.GoogleResponseKeys.isbnType] as! String ==
+                            GoogleClient.Constants.GoogleResponseValues.typeISBN13 as String {
+                                guard let isbn13 = isbn[GoogleClient.Constants.GoogleResponseKeys.isbnIndetifier] else {
+                                    displayError("**************************   The 'isbn13' in the 'industryIdentifiers' level of JSON data was NOT found:  *****************")
+                                    return
+                                }
+                                print("**************************  The 'isbn13' returned in the results  ***********************")
+                                print(isbn13)
+                                self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseValues.typeISBN13 : isbn13])
+                        }
+                        */
+                        
+                        if let printType = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PrintType] as? String {
+                            print("**************************  The 'printType' returned in the results  ***********************")
+                            print(printType)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.PrintType : printType as AnyObject])
+                        } else {
+                           displayError("**************************   The 'printType' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
+                        
+                        if let pageCount = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PageCount] as? String {
+                            print("**************************  The 'pageCount' returned in the results  ***********************")
+                            print(pageCount)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.PageCount : pageCount as AnyObject])
+                        } else {
+                            displayError("**************************   The 'pageCount' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
+                        
+                        if let publisher = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Publisher] as? String {
+                            print("**************************  The 'publisher' returned in the results  ***********************")
+                            print(publisher)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.Publisher : publisher as AnyObject])
+                        } else {
+                            displayError("**************************   The 'publisher' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
+                        
+                        if let publishedDate = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String {
+                            print("**************************  The 'publishedDate' returned in the results  ***********************")
+                            print(publishedDate)
+                            self.bookInfoDictionary.append([GoogleClient.Constants.GoogleResponseKeys.PublishedDate : publishedDate as AnyObject])
+                        } else {
+                            displayError("**************************   The 'publishedDate' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
+                        }
+                        
                     }
+                    print("*****************   Here is the 'bookInfoDictionary' complete with contents appended.   *************")
+                    print(self.bookInfoDictionary)
                     
-                } else {
-                    completionHandlerForGoogleSearch(nil, error)
                 }
+                
             }
         }
     }
