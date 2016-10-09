@@ -82,7 +82,14 @@ extension GoogleClient {
             static let PublishedDate = "publishedDate"
             
             static let isbnType = "type"
-            static let isbnIndetifier = "indentifier"
+            static let isbnIdentifier = "identifier"
+            
+            static let isbn10 = "ISBN_10"
+            static let isbn13 = "ISBN_13"
+            
+            static let PreviewLink = "previewLink"
+            static let ImageLinks = "imageLinks"
+            static let ThumbnailImageLink = "thumbnail"
         }
         
         // MARK: Google Response Values
