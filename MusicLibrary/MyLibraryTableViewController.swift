@@ -7,9 +7,26 @@
 //
 
 import UIKit
+import CoreData
 
-class MyLibraryTableViewController: UITableViewController {
+class MyLibraryTableViewController: CoreDataTableViewController {
+    
+    //Properties:
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if fetchedResultsController?.fetchedObjects?.count == 0 {
+            print("********    ***********   FRC is empty  *******   ****************")
+            //loadPhotoAlbum()
+        } else {
+            //load books saved in Core Data and accessed by the FRC
+            self.tableView.reloadData()
+            
+        }
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,7 +36,23 @@ class MyLibraryTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
+        // Set the title
+        title = "My Music Library"
         
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "publishedDate", ascending: false)]
+        
+        // Create the FetchedResultsController
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,25 +61,25 @@ class MyLibraryTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
-    }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // This method must be implemented by our subclass. There's no way
+        // CoreDataTableViewController can know what type of cell we want to
+        // use.
+
+        // Find the right musicBook for this indexpath
+        let musicBook = fetchedResultsController!.object(at: indexPath) as! MusicBook
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "LibraryCell", for: indexPath)
 
         // Configure the cell...
+        cell.textLabel?.text = musicBook.title
+        cell.detailTextLabel?.text = musicBook.isbn13
+
 
         return cell
     }
+
  
 
     /*
@@ -57,17 +90,14 @@ class MyLibraryTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        if let context = fetchedResultsController?.managedObjectContext, let musicBook = fetchedResultsController?.object(at: indexPath) as? MusicBook, editingStyle == .delete {
+            context.delete(musicBook)
+        }
     }
-    */
+ 
 
     /*
     // Override to support rearranging the table view.

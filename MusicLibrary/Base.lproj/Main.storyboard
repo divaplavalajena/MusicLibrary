@@ -32,7 +32,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nwz-c2-cZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-90.400000000000006" y="906.29685157421295"/>
+            <point key="canvasLocation" x="358" y="895"/>
         </scene>
         <!--AddToLibrary-->
         <scene sceneID="5cU-pg-Fa0">
@@ -46,23 +46,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9hv-iu-u9N">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddToCell" id="UfM-Cf-Tps">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UfM-Cf-Tps" id="nOD-th-hli">
-                                            <frame key="frameInset" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="2aZ-tG-m2M" id="DTE-hv-4z8"/>
-                                    <outlet property="delegate" destination="2aZ-tG-m2M" id="JwH-A8-lXz"/>
-                                </connections>
-                            </tableView>
                             <searchBar contentMode="redraw" placeholder="Enter ISBN or use barcode scanner" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-MP-wZF">
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -71,7 +54,36 @@
                                     <constraint firstAttribute="width" constant="64" id="ePR-yc-Cjd"/>
                                 </constraints>
                                 <state key="normal" image="barcodeImage64X44.png"/>
+                                <connections>
+                                    <action selector="scanBarcode:" destination="2aZ-tG-m2M" eventType="touchUpInside" id="1gz-1w-KAI"/>
+                                </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="53" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9hv-iu-u9N">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddToCell" textLabel="5j8-cc-5xR" style="IBUITableViewCellStyleDefault" id="UfM-Cf-Tps">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="53"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UfM-Cf-Tps" id="nOD-th-hli">
+                                            <frame key="frameInset" width="375" height="52"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5j8-cc-5xR">
+                                                    <frame key="frameInset" minX="15" width="345" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2aZ-tG-m2M" id="rzA-Hm-yWf"/>
+                                    <outlet property="delegate" destination="2aZ-tG-m2M" id="PAr-kq-a50"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -88,54 +100,52 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add to Library" image="AddToLibrary30X30.png" id="2zP-91-UjM"/>
+                    <connections>
+                        <outlet property="addToLibraryTableView" destination="9hv-iu-u9N" id="Nj5-AB-jTG"/>
+                        <outlet property="searchBar" destination="ZCZ-MP-wZF" id="MZq-Op-nop"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMm-Oe-m6D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1023.2" y="473.6131934032984"/>
+            <point key="canvasLocation" x="1022" y="431"/>
         </scene>
-        <!--MyLibrary-->
-        <scene sceneID="t3d-eZ-WzB">
+        <!--My Library-->
+        <scene sceneID="drx-zs-dxg">
             <objects>
-                <viewController title="MyLibrary" id="lm4-bH-PCD" customClass="MyLibraryTableViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Pkx-nP-6af"/>
-                        <viewControllerLayoutGuide type="bottom" id="lIn-R3-ICq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="31q-QQ-tTN">
+                <tableViewController id="JG1-gL-lh3" customClass="MyLibraryTableViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pQQ-cn-Zhc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YuX-rp-8PR">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LibraryCell" id="YWy-yV-KkT">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YWy-yV-KkT" id="pYG-1h-cjT">
-                                            <frame key="frameInset" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="lm4-bH-PCD" id="SJq-iR-xU8"/>
-                                    <outlet property="delegate" destination="lm4-bH-PCD" id="CSy-ao-aEi"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="lIn-R3-ICq" firstAttribute="top" secondItem="YuX-rp-8PR" secondAttribute="bottom" id="3b7-vy-Z4a"/>
-                            <constraint firstAttribute="trailing" secondItem="YuX-rp-8PR" secondAttribute="trailing" id="6gJ-wL-ifC"/>
-                            <constraint firstItem="YuX-rp-8PR" firstAttribute="top" secondItem="Pkx-nP-6af" secondAttribute="bottom" id="DYj-42-m0W"/>
-                            <constraint firstItem="YuX-rp-8PR" firstAttribute="leading" secondItem="31q-QQ-tTN" secondAttribute="leading" id="fET-hK-Ykl"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="My Library" image="BookShelf30X30.png" id="Ycd-9A-BSz"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IzX-GS-5xy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LibraryCell" textLabel="WIv-Ks-zmt" style="IBUITableViewCellStyleDefault" id="wKS-PS-b6L">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wKS-PS-b6L" id="QNX-po-5gR">
+                                    <frame key="frameInset" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WIv-Ks-zmt">
+                                            <frame key="frameInset" minX="15" width="345" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="JG1-gL-lh3" id="6hG-ZM-D5b"/>
+                            <outlet property="delegate" destination="JG1-gL-lh3" id="dBJ-b7-yD9"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="My Library" image="BookShelf30X30.png" id="Dhs-Ry-fOi"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9La-Zo-Dpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1036" y="-236.13193403298354"/>
+            <point key="canvasLocation" x="1023" y="-226"/>
         </scene>
         <!--FirstViewController-->
         <scene sceneID="1cm-5l-hIp">
@@ -179,7 +189,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="lm4-bH-PCD" kind="relationship" relationship="viewControllers" id="NE8-AG-Lwp"/>
+                        <segue destination="JG1-gL-lh3" kind="relationship" relationship="viewControllers" id="hdm-ia-ptf"/>
                         <segue destination="2aZ-tG-m2M" kind="relationship" relationship="viewControllers" id="NMo-PV-p8i"/>
                         <segue destination="BY6-gb-dEE" kind="relationship" relationship="viewControllers" id="SqE-8z-yKi"/>
                     </connections>

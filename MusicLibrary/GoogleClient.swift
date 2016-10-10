@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 
 // MARK: GoogleClient : NSObject
@@ -22,7 +23,7 @@ class GoogleClient : NSObject {
     // MARK: Google API
     
     //Get a random page number of pages searched on Flickr
-    func getBookFromGoogleBySearchISBN(_ isbn: String, completionHandlerForGoogleSearch: @escaping (_ resultsISBN: [MusicBook]?, _ error: NSError?) -> Void) {
+    func getBookFromGoogleBySearchISBN(_ isbn: String, completionHandlerForGoogleSearch: @escaping (_ resultsISBN: [[String:AnyObject]]?, _ error: NSError?) -> Void) {
         
         let isbnQuery = "isbn:" + isbn
         print(isbnQuery)
@@ -212,9 +213,12 @@ class GoogleClient : NSObject {
                 print("*****************   Here is the 'bookInfoDictionary' complete with contents appended.   *************")
                 print(bookInfoDictionary)
                 
+                //TODO: This will be replaced by call to save to Core Data: ManagedObjectContext
+                /**
                 let booksInfoDictionaries = MusicBook.booksFromResults(bookInfoDictionary)
                 print("***** Here is the 'booksInfoDictionaries' result after parsing and processing into MusicBook struct.  *******")
                 print(booksInfoDictionaries)
+                **/
             }
             
         }
