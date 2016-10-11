@@ -56,11 +56,9 @@ class CoreDataTableViewController: UITableViewController, NSFetchedResultsContro
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let fc = fetchedResultsController {
-            return fc.sections![section].numberOfObjects
-        } else {
-            return 0
-        }
+        print(" This is the numberOfRowsInSection with the FRC: \(fetchedResultsController?.fetchedObjects?.count)")
+        return fetchedResultsController?.fetchedObjects?.count ?? 0
+        
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

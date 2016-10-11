@@ -14,6 +14,13 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     @IBOutlet var addToLibraryTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     
+    lazy var sharedContext: NSManagedObjectContext = {
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        return stack.context
+    }()
+    
     @IBAction func scanBarcode(_ sender: AnyObject) {
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
     }
@@ -62,22 +69,14 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         addToLibraryTableView.delegate = self
         addToLibraryTableView.dataSource = self
         
-        // Get the stack
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let stack = delegate.stack
-        
         // Create a fetchrequest
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
         fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
                               NSSortDescriptor(key: "publishedDate", ascending: false)]
         
         // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-        /**
-        GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN("0793510066") { (resultsISBN, error) in
-            print(resultsISBN)
-        }
-        **/
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,8 +97,29 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddToCell", for: indexPath) as! LibraryCellTableViewCell
         
         // Configure the cell...
-        cell.textLabel?.text = musicBook.title
-        cell.detailTextLabel?.text = musicBook.isbn13
+        cell.titleLable.text = musicBook.title
+        cell.subtitleLabel.text = musicBook.isbn13
+        
+        
+        //TODO: implement code to use imageLink to get image and save image to CoreData and then display it
+        if musicBook.imageData == nil {
+            if let imagePath = musicBook.imageLink {
+                let _ = GoogleClient.sharedInstance().taskForGETImage(imagePath, completionHandlerForImage: { (imageData, error) in
+                    if let image = UIImage(data: imageData!) {
+                        musicBook.imageData = imageData as NSData?
+                        self.saveToBothContexts()
+                        
+                        DispatchQueue.main.async {
+                            cell.bookImageView.image = image
+                        }
+                    }
+                    
+                })
+            }
+        } else if musicBook.imageData != nil {
+            cell.bookImageView.image = UIImage(data: musicBook.imageData as! Data)
+        }
+ 
 
         return cell
     }
@@ -203,6 +223,13 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         addToLibraryTableView.endUpdates()
+    }
+    
+    // MARK: Save to Both Contexts function
+    func saveToBothContexts() {
+        // Save pin data to both contexts
+        let stack = (UIApplication.shared.delegate as! AppDelegate).stack
+        stack.saveBothContexts()
     }
 
     

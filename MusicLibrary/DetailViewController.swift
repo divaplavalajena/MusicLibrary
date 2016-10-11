@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             if let imageView = self.imageView {
-                //imageView.image = detail.imageData
+                imageView.image = UIImage(data: detail.imageData as! Data)
             }
             if let titleLabel = self.titleLabel {
                 titleLabel.text = detail.title
@@ -77,7 +77,7 @@ class DetailViewController: UIViewController {
             if let googleIDLabel = self.googleIDLabel {
                 googleIDLabel.text = detail.googleID
             }
-            print(detail)
+            print("*** *** ***  This is the the info sent to the DetailVC as detail: \(detail)  *** *** *****")
         }
     }
     

@@ -202,6 +202,8 @@ class GoogleClient : NSObject {
                         }
                     }
                     
+                    //let dateAdded = currentDate
+                    
                     //each time through loop append dictionary to array of dictionaries
                     print("******  This is the 'loopDictionary' after an iteration of the loop.  *****")
                     print(loopDictionary)
