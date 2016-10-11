@@ -19,8 +19,10 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         if fetchedResultsController?.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
             //loadPhotoAlbum()
+            self.tableView.reloadData()
         } else {
             //load books saved in Core Data and accessed by the FRC
+            print("********    ***********   FRC pulled values from Core Data  *******   ****************")
             self.tableView.reloadData()
             
         }
@@ -51,7 +53,11 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         // Create the FetchedResultsController
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
         
-        
+        /**
+         GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN("0793510066") { (resultsISBN, error) in
+         print(resultsISBN)
+         }
+         **/
 
     }
 

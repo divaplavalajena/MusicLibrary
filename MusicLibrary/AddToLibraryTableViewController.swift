@@ -36,8 +36,10 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         if fetchedResultsController?.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
             //loadPhotoAlbum()
+            self.addToLibraryTableView.reloadData()
         } else {
             //load books saved in Core Data and accessed by the FRC
+            print("********    ***********   FRC pulled values from Core Data  *******   ****************")
             self.addToLibraryTableView.reloadData()
             
         }
@@ -70,11 +72,11 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         
         // Create the FetchedResultsController
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-        
+        /**
         GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN("0793510066") { (resultsISBN, error) in
             print(resultsISBN)
         }
-
+        **/
     }
 
     override func didReceiveMemoryWarning() {

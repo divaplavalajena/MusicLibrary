@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jfP-Zb-UWL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5Jx-yO-T47">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -56,6 +56,7 @@
                                 <state key="normal" image="barcodeImage64X44.png"/>
                                 <connections>
                                     <action selector="scanBarcode:" destination="2aZ-tG-m2M" eventType="touchUpInside" id="1gz-1w-KAI"/>
+                                    <segue destination="xVB-i4-IZj" kind="presentation" id="ewa-Cp-Z7l"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="53" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9hv-iu-u9N">
@@ -109,6 +110,24 @@
             </objects>
             <point key="canvasLocation" x="1022" y="431"/>
         </scene>
+        <!--Barcode Reader View Controller-->
+        <scene sceneID="Weg-t6-1fX">
+            <objects>
+                <viewController id="xVB-i4-IZj" customClass="BarcodeReaderViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="17c-5R-r90"/>
+                        <viewControllerLayoutGuide type="bottom" id="bV9-ok-wEb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Mc6-mO-wUw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nIF-pz-bAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1791" y="434"/>
+        </scene>
         <!--My Library-->
         <scene sceneID="drx-zs-dxg">
             <objects>
@@ -146,38 +165,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9La-Zo-Dpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1023" y="-226"/>
-        </scene>
-        <!--FirstViewController-->
-        <scene sceneID="1cm-5l-hIp">
-            <objects>
-                <viewController title="FirstViewController" id="jfP-Zb-UWL" customClass="FirstViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="izX-ru-cUx"/>
-                        <viewControllerLayoutGuide type="bottom" id="S8c-Co-i7B"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="S9H-17-uqj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TM0-vR-7yb">
-                                <frame key="frameInset" minX="138" minY="280" width="98" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="5Jx-yO-T47" kind="show" id="8ey-Ir-ZsG"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="button" destination="TM0-vR-7yb" id="0fX-ea-oXE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mg2-aQ-39u" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-650.39999999999998" y="128.18590704647679"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5lh-Oe-le7">

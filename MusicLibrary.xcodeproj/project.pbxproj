@@ -16,6 +16,7 @@
 		9C192A7F1D9C6B1A00B6D77A /* MusicLibraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */; };
 		9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */; };
 		9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A8E1D9DA01A00B6D77A /* Constants.swift */; };
+		9C813B3E1DAC504500D09314 /* BarcodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B3D1DAC504500D09314 /* BarcodeReaderViewController.swift */; };
 		9CF23C241DA8121000AEF582 /* MyLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */; };
 		9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */; };
 		9CF23C281DA844A700AEF582 /* barcodeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C271DA844A700AEF582 /* barcodeImage.png */; };
@@ -25,7 +26,6 @@
 		9CF23C301DA84BFC00AEF582 /* AddToLibrary30X30.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C2F1DA84BFC00AEF582 /* AddToLibrary30X30.png */; };
 		9CF23C321DA850BA00AEF582 /* Settings30X30.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C311DA850BA00AEF582 /* Settings30X30.png */; };
 		9CF23C341DA854C400AEF582 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C331DA854C400AEF582 /* SettingsViewController.swift */; };
-		9CF23C371DA856B400AEF582 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C361DA856B400AEF582 /* FirstViewController.swift */; };
 		9CF23C391DA9F03100AEF582 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C381DA9F03100AEF582 /* CoreDataStack.swift */; };
 		9CF23C3D1DA9F54400AEF582 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C3B1DA9F54400AEF582 /* Model.xcdatamodeld */; };
 		9CF23C401DABF22D00AEF582 /* MusicBook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C3E1DABF22D00AEF582 /* MusicBook+CoreDataClass.swift */; };
@@ -65,6 +65,7 @@
 		9C192A801D9C6B1A00B6D77A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C192A8C1D9D9F5C00B6D77A /* GoogleClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleClient.swift; sourceTree = "<group>"; };
 		9C192A8E1D9DA01A00B6D77A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9C813B3D1DAC504500D09314 /* BarcodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderViewController.swift; sourceTree = "<group>"; };
 		9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C271DA844A700AEF582 /* barcodeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = barcodeImage.png; path = Assets.xcassets/barcodeImage.png; sourceTree = "<group>"; };
@@ -74,7 +75,6 @@
 		9CF23C2F1DA84BFC00AEF582 /* AddToLibrary30X30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AddToLibrary30X30.png; path = Assets.xcassets/AddToLibrary30X30.png; sourceTree = "<group>"; };
 		9CF23C311DA850BA00AEF582 /* Settings30X30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Settings30X30.png; path = Assets.xcassets/Settings30X30.png; sourceTree = "<group>"; };
 		9CF23C331DA854C400AEF582 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		9CF23C361DA856B400AEF582 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		9CF23C381DA9F03100AEF582 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9CF23C3C1DA9F54400AEF582 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9CF23C3E1DABF22D00AEF582 /* MusicBook+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicBook+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -180,11 +180,11 @@
 		9C192A921D9DA04300B6D77A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9CF23C361DA856B400AEF582 /* FirstViewController.swift */,
 				9C0458C41DABFC6800AEB7BE /* CoreDataTableViewController.swift */,
 				9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */,
 				9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */,
 				9CF23C331DA854C400AEF582 /* SettingsViewController.swift */,
+				9C813B3D1DAC504500D09314 /* BarcodeReaderViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -361,7 +361,7 @@
 				9CF23C401DABF22D00AEF582 /* MusicBook+CoreDataClass.swift in Sources */,
 				9CF23C241DA8121000AEF582 /* MyLibraryTableViewController.swift in Sources */,
 				9CF23C391DA9F03100AEF582 /* CoreDataStack.swift in Sources */,
-				9CF23C371DA856B400AEF582 /* FirstViewController.swift in Sources */,
+				9C813B3E1DAC504500D09314 /* BarcodeReaderViewController.swift in Sources */,
 				9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */,
 				9C0458C51DABFC6800AEB7BE /* CoreDataTableViewController.swift in Sources */,
 				9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */,

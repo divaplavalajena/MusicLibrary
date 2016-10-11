@@ -34,7 +34,7 @@ class GoogleClient : NSObject {
             Constants.GoogleParameterKeys.APIKey: Constants.GoogleParameterValues.APIKey as AnyObject
         ]
         
-        
+        var bookInfoDictionary = [[String:AnyObject]]()
         
         /* 2. Make the request */
         let _ = taskForGETMethod(Constants.Methods.Search, parameters: queryParameters) { (result, error) in
@@ -57,8 +57,6 @@ class GoogleClient : NSObject {
                     return
                 }
                 print("*********  The number of books returned from ISBN search is: \(numberOfBooks)  ******************")
-                
-                var bookInfoDictionary = [[String:AnyObject]]()
                 
                 
                 /* GUARD: Is "items" key in our result? */
@@ -213,12 +211,8 @@ class GoogleClient : NSObject {
                 print("*****************   Here is the 'bookInfoDictionary' complete with contents appended.   *************")
                 print(bookInfoDictionary)
                 
-                //TODO: This will be replaced by call to save to Core Data: ManagedObjectContext
-                /**
-                let booksInfoDictionaries = MusicBook.booksFromResults(bookInfoDictionary)
-                print("***** Here is the 'booksInfoDictionaries' result after parsing and processing into MusicBook struct.  *******")
-                print(booksInfoDictionaries)
-                **/
+                completionHandlerForGoogleSearch(bookInfoDictionary, nil)
+                
             }
             
         }
