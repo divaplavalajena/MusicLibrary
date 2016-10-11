@@ -15,6 +15,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     @IBOutlet var searchBar: UISearchBar!
     
     @IBAction func scanBarcode(_ sender: AnyObject) {
+        //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
     }
     
     // MARK: Properties
@@ -94,7 +95,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         // Find the right musicBook for this indexpath
         let musicBook = fetchedResultsController!.object(at: indexPath) as! MusicBook
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddToCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddToCell", for: indexPath) as! LibraryCellTableViewCell
         
         // Configure the cell...
         cell.textLabel?.text = musicBook.title

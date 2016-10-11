@@ -12,6 +12,13 @@ import CoreData
 class MyLibraryTableViewController: CoreDataTableViewController {
     
     //Properties:
+    
+    lazy var sharedContext: NSManagedObjectContext = {
+        // Get the stack
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = delegate.stack
+        return stack.context
+    }()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -76,17 +83,38 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         // Find the right musicBook for this indexpath
         let musicBook = fetchedResultsController!.object(at: indexPath) as! MusicBook
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LibraryCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LibraryCell", for: indexPath) as! LibraryCellTableViewCell
 
         // Configure the cell...
-        cell.textLabel?.text = musicBook.title
-        cell.detailTextLabel?.text = musicBook.isbn13
+        cell.titleLable.text = musicBook.title
+        cell.subtitleLabel.text = musicBook.isbn13
+        
+        //TODO: implement code to use imageLink to get image and save image to CoreData and then display it
+        if musicBook.imageData == nil {
+            if let imagePath = musicBook.imageLink {
+                let _ = GoogleClient.sharedInstance().taskForGETImage(imagePath, completionHandlerForImage: { (imageData, error) in
+                    if let image = UIImage(data: imageData!) {
+                        let bookImage: [String: AnyObject] = ["imageData" : imageData as AnyObject]
+                        let _ = MusicBook(dictionary: bookImage, context: self.sharedContext)
+                        self.saveToBothContexts()
+
+                        DispatchQueue.main.async {
+                            cell.bookImageView.image = image
+                        }
+                    }
+                    
+                })
+            }
+        }
+        
 
 
         return cell
     }
 
- 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "displayDetailVC", sender: nil)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -120,14 +148,40 @@ class MyLibraryTableViewController: CoreDataTableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier! == "displayDetailVC" {
+            
+            if let detailVC = segue.destination as? DetailViewController {
+            
+                let indexPath = self.tableView.indexPathForSelectedRow
+                let musicBook = self.fetchedResultsController?.object(at: indexPath!) as? MusicBook
+                //let detailVC = (segue.destination as? UINavigationController)?.topViewController as! DetailViewController
+                detailVC.detailItem = musicBook
+                detailVC.navigationItem.leftItemsSupplementBackButton = true
+                
+            }
+            
+            
+        }
+
     }
-    */
+    
+    // MARK: Save to Both Contexts function
+    func saveToBothContexts() {
+        // Save pin data to both contexts
+        let stack = (UIApplication.shared.delegate as! AppDelegate).stack
+        stack.saveBothContexts()
+    }
+ 
 
 }
+
+
+
