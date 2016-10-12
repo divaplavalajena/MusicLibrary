@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet var addToLibraryTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
@@ -23,31 +23,21 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     @IBAction func scanBarcode(_ sender: AnyObject) {
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
+        performSegue(withIdentifier: "displayBarcodeReaderVC", sender: sender)
     }
     
-    // MARK: Properties
-    
-    var fetchedResultsController : NSFetchedResultsController<NSFetchRequestResult>? {
-        didSet {
-            // Whenever the frc changes, we execute the search and
-            // reload the table
-            fetchedResultsController?.delegate = self
-            executeSearch()
-            addToLibraryTableView.reloadData()
-        }
-    }
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if fetchedResultsController?.fetchedObjects?.count == 0 {
+        if fetchedResultsController.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
-            //loadPhotoAlbum()
+            executeSearch()
             self.addToLibraryTableView.reloadData()
         } else {
             //load books saved in Core Data and accessed by the FRC
             print("********    ***********   FRC pulled values from Core Data  *******   ****************")
+            executeSearch()
             self.addToLibraryTableView.reloadData()
             
         }
@@ -60,22 +50,17 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Set the title
         title = "Add To Music Library"
         
-        view.addSubview(addToLibraryTableView)
-        addToLibraryTableView.delegate = self
-        addToLibraryTableView.dataSource = self
+        //Core Data implementation
+        fetchedResultsController.delegate = self
         
-        // Create a fetchrequest
-        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
-        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
-                              NSSortDescriptor(key: "publishedDate", ascending: false)]
+        //Make the search bar a delegate of self so that keyboard responds to button tap
+        searchBar.delegate = self
         
-        // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
         
     }
 
@@ -83,6 +68,73 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Search Bar methods
+    //var customDelegate: UISearchBarDelegate!
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dismissKeyboard()
+        
+        if (searchBar.text?.isEmpty)! {
+            print("***** **** *** ISBN manual search NOT completed due to empty text field.  *** **** *****")
+        } else {
+            let isbnNumber = searchBar.text
+            
+            // Let the user know we've found something.
+            
+            let alert = UIAlertController(title: "Search this Barcode?", message: isbnNumber, preferredStyle: UIAlertControllerStyle.alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(cancelAction)
+            alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
+                
+                // Remove the spaces.
+                
+                let trimmedCode = isbnNumber!.trimmingCharacters(in: CharacterSet.whitespaces)
+                
+                GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error) in
+                    
+                    //code to take array of dictionaries (bookDictionary) and create CoreData info
+                    if let bookDictionary = bookDictionary {
+                        
+                        print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
+                        print(bookDictionary)
+                        
+                        DispatchQueue.main.async {
+                            _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
+                                let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
+                                self.saveToBothContexts()
+                                return book
+                            }
+                        }
+                    } else {
+                        print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
+                    }
+                })
+                self.dismiss(animated: true, completion: {})
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    lazy var tapRecognizer: UITapGestureRecognizer = {
+        var recognizer = UITapGestureRecognizer(target:self, action: #selector(AddToLibraryTableViewController.dismissKeyboard))
+        return recognizer
+    }()
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        view.addGestureRecognizer(tapRecognizer)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        view.removeGestureRecognizer(tapRecognizer)
+    }
+    
+    func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+    
 
     // MARK: - Table view data source
     
@@ -92,7 +144,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         // use.
 
         // Find the right musicBook for this indexpath
-        let musicBook = fetchedResultsController!.object(at: indexPath) as! MusicBook
+        let musicBook = fetchedResultsController.object(at: indexPath) as! MusicBook
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddToCell", for: indexPath) as! LibraryCellTableViewCell
         
@@ -123,67 +175,75 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "displayDetailVC", sender: nil)
+    }
+    
+    // Override to support conditional editing of the table view.
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+
  
 
     // Override to support editing the table view.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if let context = fetchedResultsController?.managedObjectContext, let musicBook = fetchedResultsController?.object(at: indexPath) as? MusicBook, editingStyle == .delete {
-            context.delete(musicBook)
+        if editingStyle == .delete {
+            if let musicBook = fetchedResultsController.object(at: indexPath) as? MusicBook {
+                sharedContext.delete(musicBook)
+            }
         }
     }
     
     //Added from CoreDataTableViewController
     // MARK: - CoreDataTableViewController (Table Data Source)
     func numberOfSections(in tableView: UITableView) -> Int {
-        if let fc = fetchedResultsController {
-            return (fc.sections?.count)!
-        } else {
-            return 0
-        }
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let fc = fetchedResultsController {
-            return fc.sections![section].numberOfObjects
-        } else {
-            return 0
-        }
+        //print(" This is the numberOfRowsInSection with the FRC: \(fetchedResultsController.sections?[section].numberOfObjects)")
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let fc = fetchedResultsController {
-            return fc.sections![section].name
-        } else {
-            return nil
-        }
+        return fetchedResultsController.sections![section].name
     }
     
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        if let fc = fetchedResultsController {
-            return fc.section(forSectionIndexTitle: title, at: index)
-        } else {
-            return 0
-        }
+        return fetchedResultsController.section(forSectionIndexTitle: title, at: index)
     }
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        if let fc = fetchedResultsController {
-            return fc.sectionIndexTitles
-        } else {
-            return nil
-        }
+        return fetchedResultsController.sectionIndexTitles
     }
     
     // MARK: - CoreDataTableViewController (Fetches)
     func executeSearch() {
-        if let fc = fetchedResultsController {
-            do {
-                try fc.performFetch()
-            } catch let e as NSError {
-                print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
-            }
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let e as NSError {
+            print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
         }
     }
+    
+    // MARK: NSFetchedResultsController Methods
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
+        fr.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true),
+                              NSSortDescriptor(key: "title", ascending: false)]
+        
+        // Create the FetchedResultsController
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
+        
+    }()
     
     
     // MARK: - CoreDataTableViewController: NSFetchedResultsControllerDelegate
@@ -233,38 +293,55 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     }
 
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
+    
     // MARK: - Navigation
 
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier! == "displayDetailVC" {
+            
+            if let detailVC = segue.destination as? DetailViewController {
+                
+                let indexPath = self.addToLibraryTableView.indexPathForSelectedRow
+                let musicBook = self.fetchedResultsController.object(at: indexPath!) as? MusicBook
+                //let detailVC = (segue.destination as? UINavigationController)?.topViewController as! DetailViewController
+                detailVC.detailItem = musicBook
+                detailVC.navigationItem.leftItemsSupplementBackButton = true
+                //detailVC.navigationController?.pushViewController(detailVC, animated: true)
+                
+            }
+   
+        }
+        
+        if segue.identifier! == "displayBarcodeReaderVC" {
+            if let barcodeReaderVC = segue.destination as? BarcodeReaderViewController {
+                barcodeReaderVC.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
+
     }
-    */
+    
+        
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+
+ 
 
 }

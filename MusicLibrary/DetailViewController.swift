@@ -24,8 +24,11 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        // Set the title
+        title = "Book Detail"
+        
         self.configureView()
     }
     
@@ -58,9 +61,11 @@ class DetailViewController: UIViewController {
             }
             if let dateInfo = self.dateInfo {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMMM dd yyyy"
-                let dateFormatted = dateFormatter.string(from: detail.dateAdded as! Date)
-                dateInfo.text = dateFormatted
+                dateFormatter.dateFormat = "yyyy MM dd"
+                if let dateObj = dateFormatter.date(from: detail.publishedDate!) {
+                    let dateFormatted = dateFormatter.string(from: dateObj)
+                    dateInfo.text = dateFormatted
+                }
             }
             if let pagesCount = self.pagesCount {
                 pagesCount.text = detail.pageCount

@@ -48,8 +48,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Enter ISBN or use barcode scanner" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-MP-wZF">
-                                <textInputTraits key="textInputTraits"/>
+                            <searchBar contentMode="redraw" prompt="NUMBERS ONLY" placeholder="Enter ISBN or use barcode scanner -&gt;" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-MP-wZF">
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="search"/>
                             </searchBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFf-rX-Jex">
                                 <constraints>
@@ -58,7 +58,7 @@
                                 <state key="normal" image="barcodeImage64X44.png"/>
                                 <connections>
                                     <action selector="scanBarcode:" destination="2aZ-tG-m2M" eventType="touchUpInside" id="1gz-1w-KAI"/>
-                                    <segue destination="xVB-i4-IZj" kind="presentation" id="ewa-Cp-Z7l"/>
+                                    <segue destination="xVB-i4-IZj" kind="presentation" identifier="displayBarcodeReaderVC" id="ewa-Cp-Z7l"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9hv-iu-u9N">
@@ -71,7 +71,7 @@
                                             <frame key="frameInset" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFG-5r-RMV">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jFG-5r-RMV">
                                                     <frame key="frameInset" minX="267" minY="8" width="100" height="83"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -122,7 +122,7 @@
                     <connections>
                         <outlet property="addToLibraryTableView" destination="9hv-iu-u9N" id="Nj5-AB-jTG"/>
                         <outlet property="searchBar" destination="ZCZ-MP-wZF" id="MZq-Op-nop"/>
-                        <segue destination="8Ux-Ip-EVa" kind="showDetail" identifier="displayDetailVC" id="Rds-WB-alL"/>
+                        <segue destination="8Ux-Ip-EVa" kind="show" identifier="displayDetailVC" action="showDetailViewController:sender:" id="HDJ-xK-lYL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMm-Oe-m6D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -145,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIF-pz-bAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1279" y="1188"/>
+            <point key="canvasLocation" x="2310" y="1196"/>
         </scene>
         <!--My Library Table View Controller-->
         <scene sceneID="drx-zs-dxg">
@@ -163,7 +163,7 @@
                                     <frame key="frameInset" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Szd-Tf-uhy">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Szd-Tf-uhy">
                                             <frame key="frameInset" minX="267" minY="8" width="100" height="83"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -197,7 +197,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="WT5-BE-Cvu"/>
                     <connections>
-                        <segue destination="8Ux-Ip-EVa" kind="showDetail" identifier="displayDetailVC" id="baL-s0-xQe"/>
+                        <segue destination="8Ux-Ip-EVa" kind="show" identifier="displayDetailVC" action="showDetailViewController:sender:" id="NYc-Vq-3mi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9La-Zo-Dpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,7 +216,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bB7-Vx-LO7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bB7-Vx-LO7">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="Aw3-1P-4nn"/>
                                 </constraints>
@@ -234,13 +234,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xp5-6f-Qmo">
-                                <frame key="frameInset" minY="28" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="wLS-e2-sw8"/>
-                                </items>
-                            </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68n-Mi-AEz">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="2RN-H1-I23"/>
@@ -352,6 +345,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BiV-SU-n0o">
+                                <frame key="frameInset" minY="28" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -420,7 +417,8 @@
                             <constraint firstItem="dtf-mQ-4HI" firstAttribute="leading" secondItem="bbM-bE-Q5e" secondAttribute="trailing" constant="1" id="zg3-j2-nCc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="uUG-zC-gj6"/>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="authors" destination="Kfv-JJ-w3B" id="4iW-Uo-M0r"/>
                         <outlet property="dateInfo" destination="2Bq-2S-KWF" id="SeB-Fw-dAs"/>
@@ -436,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vch-5L-O9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2926" y="143"/>
+            <point key="canvasLocation" x="2934" y="177"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="5lh-Oe-le7">
@@ -503,6 +501,6 @@
         <image name="barcodeImage64X44.png" width="64" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Rds-WB-alL"/>
+        <segue reference="HDJ-xK-lYL"/>
     </inferredMetricsTieBreakers>
 </document>

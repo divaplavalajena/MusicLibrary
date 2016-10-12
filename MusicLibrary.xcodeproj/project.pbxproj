@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9C0458C51DABFC6800AEB7BE /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0458C41DABFC6800AEB7BE /* CoreDataTableViewController.swift */; };
 		9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */; };
 		9C192A641D9C6B1A00B6D77A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C192A621D9C6B1A00B6D77A /* Main.storyboard */; };
 		9C192A661D9C6B1A00B6D77A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C192A651D9C6B1A00B6D77A /* Assets.xcassets */; };
@@ -52,7 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9C0458C41DABFC6800AEB7BE /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
 		9C192A5B1D9C6B1A00B6D77A /* MusicLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C192A631D9C6B1A00B6D77A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 		9C192A921D9DA04300B6D77A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				9C0458C41DABFC6800AEB7BE /* CoreDataTableViewController.swift */,
 				9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */,
 				9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */,
 				9CF23C331DA854C400AEF582 /* SettingsViewController.swift */,
@@ -379,7 +376,6 @@
 				9CF23C391DA9F03100AEF582 /* CoreDataStack.swift in Sources */,
 				9C813B3E1DAC504500D09314 /* BarcodeReaderViewController.swift in Sources */,
 				9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */,
-				9C0458C51DABFC6800AEB7BE /* CoreDataTableViewController.swift in Sources */,
 				9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */,
 				9C813B441DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift in Sources */,
 				9CF23C3D1DA9F54400AEF582 /* Model.xcdatamodeld in Sources */,

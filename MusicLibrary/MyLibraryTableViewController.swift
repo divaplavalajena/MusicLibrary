@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class MyLibraryTableViewController: CoreDataTableViewController {
+class MyLibraryTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     //Properties:
     
@@ -19,17 +19,20 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         let stack = delegate.stack
         return stack.context
     }()
-
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if fetchedResultsController?.fetchedObjects?.count == 0 {
+        if fetchedResultsController.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
-            //loadPhotoAlbum()
+            executeSearch()
             self.tableView.reloadData()
         } else {
             //load books saved in Core Data and accessed by the FRC
             print("********    ***********   FRC pulled values from Core Data  *******   ****************")
+            executeSearch()
             self.tableView.reloadData()
             
         }
@@ -43,19 +46,15 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Set the title
         title = "My Music Library"
         
-        // Create a fetchrequest
-        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
-        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
-                              NSSortDescriptor(key: "publishedDate", ascending: false)]
+        //Core Data implementation
+        fetchedResultsController.delegate = self
         
-        // Create the FetchedResultsController
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: sharedContext, sectionNameKeyPath: nil, cacheName: nil)
-
+ 
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,7 +70,7 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         // use.
 
         // Find the right musicBook for this indexpath
-        let musicBook = fetchedResultsController!.object(at: indexPath) as! MusicBook
+        let musicBook = fetchedResultsController.object(at: indexPath) as! MusicBook
         print(musicBook)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "LibraryCell", for: indexPath) as! LibraryCellTableViewCell
@@ -81,7 +80,7 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         cell.subtitleLabel.text = musicBook.isbn13
         
         
-        //TODO: implement code to use imageLink to get image and save image to CoreData and then display it
+        // Use imageLink to get imageData, convert imageData to UIImage, save imageData to CoreData and then display UIImage
         if musicBook.imageData == nil {
             if let imagePath = musicBook.imageLink {
                 let _ = GoogleClient.sharedInstance().taskForGETImage(imagePath, completionHandlerForImage: { (imageData, error) in
@@ -99,8 +98,6 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         } else if musicBook.imageData != nil {
             cell.bookImageView.image = UIImage(data: musicBook.imageData as! Data)
         }
- 
-
 
         return cell
     }
@@ -109,39 +106,25 @@ class MyLibraryTableViewController: CoreDataTableViewController {
         performSegue(withIdentifier: "displayDetailVC", sender: nil)
     }
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+ 
 
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if let context = fetchedResultsController?.managedObjectContext, let musicBook = fetchedResultsController?.object(at: indexPath) as? MusicBook, editingStyle == .delete {
-            context.delete(musicBook)
+        if editingStyle == .delete {
+            if let musicBook = fetchedResultsController.object(at: indexPath) as? MusicBook {
+                sharedContext.delete(musicBook)
+            }
         }
     }
  
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -154,7 +137,7 @@ class MyLibraryTableViewController: CoreDataTableViewController {
             if let detailVC = segue.destination as? DetailViewController {
             
                 let indexPath = self.tableView.indexPathForSelectedRow
-                let musicBook = self.fetchedResultsController?.object(at: indexPath!) as? MusicBook
+                let musicBook = self.fetchedResultsController.object(at: indexPath!) as? MusicBook
                 //let detailVC = (segue.destination as? UINavigationController)?.topViewController as! DetailViewController
                 detailVC.detailItem = musicBook
                 detailVC.navigationItem.leftItemsSupplementBackButton = true
@@ -166,12 +149,120 @@ class MyLibraryTableViewController: CoreDataTableViewController {
 
     }
     
+    
+    // MARK: - CoreDataTableViewController (Fetches)
+    func executeSearch() {
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let e as NSError {
+            print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
+        }
+        
+    }
+ 
+    
     // MARK: Save to Both Contexts function
     func saveToBothContexts() {
         // Save pin data to both contexts
         let stack = (UIApplication.shared.delegate as! AppDelegate).stack
         stack.saveBothContexts()
     }
+    
+    // MARK: - CoreDataTableViewController (Table Data Source)
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return fetchedResultsController.sections?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //print(" This is the numberOfRowsInSection with the FRC: \(fetchedResultsController.sections?[section].numberOfObjects)")
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return fetchedResultsController.sections![section].name
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return fetchedResultsController.section(forSectionIndexTitle: title, at: index)
+    }
+    
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return fetchedResultsController.sectionIndexTitles
+    }
+    
+    // MARK: - CoreDataTableViewController: NSFetchedResultsControllerDelegate
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    // MARK: NSFetchedResultsController Methods
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "MusicBook")
+        fr.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true),
+                              NSSortDescriptor(key: "publishedDate", ascending: false)]
+        
+        // Create the FetchedResultsController
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        
+        return fetchedResultsController
+        
+    }()
+
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        let set = IndexSet(integer: sectionIndex)
+        
+        switch (type) {
+        case .insert:
+            tableView.insertSections(set, with: .fade)
+        case .delete:
+            tableView.deleteSections(set, with: .fade)
+        default:
+            // irrelevant in our case
+            break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch(type) {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+
+
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
  
 
 }

@@ -202,7 +202,14 @@ class GoogleClient : NSObject {
                         }
                     }
                     
-                    //let dateAdded = currentDate
+                    let date = Date()
+                    //let dateFormatter = DateFormatter()
+                    //dateFormatter.dateFormat = "MMMM dd yyyy"
+                    //let dateAdded = dateFormatter.string(from: date)
+                    loopDictionary["dateAdded"] = date as AnyObject?
+                    print("***** ***** ***** This is the dateAdded that created just now to reflect date added to library.  ***** ***** ****")
+                    print(date)
+                    
                     
                     //each time through loop append dictionary to array of dictionaries
                     print("******  This is the 'loopDictionary' after an iteration of the loop.  *****")

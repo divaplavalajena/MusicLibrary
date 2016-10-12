@@ -40,6 +40,7 @@ public class MusicBook: NSManagedObject {
         imageLink = dictionary[GoogleClient.Constants.GoogleResponseKeys.ThumbnailImageLink] as? String
         
         imageData = dictionary["imageData"] as? NSData
+        dateAdded = dictionary["dateAdded"] as? NSDate
     }
     
         /**

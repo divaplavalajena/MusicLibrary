@@ -149,7 +149,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             let trimmedCode = code.trimmingCharacters(in: CharacterSet.whitespaces)
             
             GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error) in
-                //TODO: Insert code here to take array of dictionaries (bookDictionary) and create CoreData info
+                //code to take array of dictionaries (bookDictionary) and init CoreData info
                 if let bookDictionary = bookDictionary {
                 
                     print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
@@ -165,33 +165,9 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
                 } else {
                     print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
                 }
-                
             })
-            
-            /**
-            // EAN or UPC?
-            // Check for added "0" at beginning of code.
-            
-            let trimmedCodeString = "\(trimmedCode)"
-            var trimmedCodeNoZero: String
-            
-            if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
-                trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
-                
-                // Send the doctored UPC to DataService.searchAPI()
-                
-                DataService.searchAPI(trimmedCodeNoZero)
-            } else {
-                
-                // Send the doctored EAN to DataService.searchAPI()
-                
-                DataService.searchAPI(trimmedCodeString)
-            }
-            **/
-            
             self.dismiss(animated: true, completion: {})
         }))
-        
         self.present(alert, animated: true, completion: nil)
     }
     
