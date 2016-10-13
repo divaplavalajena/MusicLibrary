@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Settings-->
+        <!--Info-->
         <scene sceneID="13s-Tm-EP3">
             <objects>
-                <viewController title="Settings" id="BY6-gb-dEE" customClass="SettingsViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Settings" id="BY6-gb-dEE" userLabel="Info" customClass="InfoViewController" customModule="MusicLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VEX-w2-o9p"/>
                         <viewControllerLayoutGuide type="bottom" id="PRF-sx-0hy"/>
@@ -20,21 +20,99 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6he-Zw-vMA"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zr-du-rkv">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="gYd-Di-h20"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Licensing:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFh-qx-wAF">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="hu6-JF-MUO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developer Info:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wut-8u-hZR">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="FlD-R6-FCJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developed by Bella Voce Productions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wa9-K1-SgB">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="CdZ-fg-5PI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes on how to use your Music Library" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="cYH-Ov-8rv">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="9bM-ib-qsQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tet-xs-XS8">
+                                <mutableString key="text">This app will allow users to scan an ISBN barcode on a book in their music library or type in the ISBN manually. Information on the music book will populate the views including Title, Google ID, ISBN, and even an image.
+
+Users should only type in numbers into the text field, no need for hashes or slashes!
+
+Duplicates are prevented based on the Google ID.
+If you notice a duplicate, check the Google ID as it means there is most likely more than one edition of the music book.
+
+After loading the music book into your personal music library, simply tap on the book you desire and you can view the detailed information you downloaded!</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons used in this app are from icons8.com and Shutterstock.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CPo-gX-yLz">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="5QV-Bx-jVw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="6he-Zw-vMA" secondAttribute="trailing" id="FEW-LZ-bNp"/>
-                            <constraint firstItem="6he-Zw-vMA" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leading" id="M7L-gn-7mC"/>
-                            <constraint firstItem="6he-Zw-vMA" firstAttribute="top" secondItem="VEX-w2-o9p" secondAttribute="bottom" id="ZBp-EZ-6Sb"/>
-                            <constraint firstItem="PRF-sx-0hy" firstAttribute="top" secondItem="6he-Zw-vMA" secondAttribute="bottom" id="bPb-J2-3gv"/>
+                            <constraint firstItem="cYH-Ov-8rv" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="44E-JW-Ni8"/>
+                            <constraint firstItem="wa9-K1-SgB" firstAttribute="top" secondItem="Wut-8u-hZR" secondAttribute="bottom" constant="8" id="6OH-XV-1vU"/>
+                            <constraint firstItem="Wut-8u-hZR" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="7jP-Mq-UbV"/>
+                            <constraint firstItem="CPo-gX-yLz" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="B8a-pX-oPW"/>
+                            <constraint firstItem="wa9-K1-SgB" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" constant="24" id="Csl-ce-NsW"/>
+                            <constraint firstItem="vFh-qx-wAF" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" id="QwA-m8-jM7"/>
+                            <constraint firstItem="8Zr-du-rkv" firstAttribute="top" secondItem="VEX-w2-o9p" secondAttribute="bottom" constant="8" id="X7e-5t-mnz"/>
+                            <constraint firstItem="vFh-qx-wAF" firstAttribute="top" secondItem="8Zr-du-rkv" secondAttribute="bottom" constant="8" id="XAi-0Y-Dhd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wa9-K1-SgB" secondAttribute="trailing" constant="33" id="YnP-wQ-nok"/>
+                            <constraint firstItem="8Zr-du-rkv" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" id="bsB-hQ-xR3"/>
+                            <constraint firstItem="Wut-8u-hZR" firstAttribute="top" secondItem="Tet-xs-XS8" secondAttribute="bottom" constant="43" id="dVh-Qw-obq"/>
+                            <constraint firstItem="Tet-xs-XS8" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" constant="24" id="gbp-9Q-XJJ"/>
+                            <constraint firstItem="Tet-xs-XS8" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="ghA-jc-cxz"/>
+                            <constraint firstItem="CPo-gX-yLz" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" constant="24" id="iQ9-ti-sRX"/>
+                            <constraint firstItem="PRF-sx-0hy" firstAttribute="top" secondItem="wa9-K1-SgB" secondAttribute="bottom" constant="8" id="mjZ-Dz-lu3"/>
+                            <constraint firstItem="vFh-qx-wAF" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="ms3-UW-4aI"/>
+                            <constraint firstItem="cYH-Ov-8rv" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" id="nan-gh-K5H"/>
+                            <constraint firstItem="Tet-xs-XS8" firstAttribute="top" secondItem="cYH-Ov-8rv" secondAttribute="bottom" constant="8" id="qMe-6C-YFX"/>
+                            <constraint firstItem="cYH-Ov-8rv" firstAttribute="top" secondItem="CPo-gX-yLz" secondAttribute="bottom" constant="27" id="rGm-AG-A9Y"/>
+                            <constraint firstItem="CPo-gX-yLz" firstAttribute="top" secondItem="vFh-qx-wAF" secondAttribute="bottom" id="sT7-Ex-DRk"/>
+                            <constraint firstItem="Wut-8u-hZR" firstAttribute="leading" secondItem="Vge-C1-CSK" secondAttribute="leadingMargin" id="teW-4N-kxy"/>
+                            <constraint firstItem="8Zr-du-rkv" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="zj3-VE-Ebz"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Info" image="Settings30X30.png" id="VLU-4f-d7X"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nwz-c2-cZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="940"/>
+            <point key="canvasLocation" x="-0.80000000000000004" y="939.58020989505258"/>
         </scene>
         <!--AddToLibrary-->
         <scene sceneID="5cU-pg-Fa0">

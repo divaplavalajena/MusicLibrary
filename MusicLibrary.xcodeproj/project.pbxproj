@@ -28,7 +28,7 @@
 		9CF23C2E1DA84A7B00AEF582 /* BookShelf30X30.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C2D1DA84A7B00AEF582 /* BookShelf30X30.png */; };
 		9CF23C301DA84BFC00AEF582 /* AddToLibrary30X30.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C2F1DA84BFC00AEF582 /* AddToLibrary30X30.png */; };
 		9CF23C321DA850BA00AEF582 /* Settings30X30.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C311DA850BA00AEF582 /* Settings30X30.png */; };
-		9CF23C341DA854C400AEF582 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C331DA854C400AEF582 /* SettingsViewController.swift */; };
+		9CF23C341DA854C400AEF582 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C331DA854C400AEF582 /* InfoViewController.swift */; };
 		9CF23C391DA9F03100AEF582 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C381DA9F03100AEF582 /* CoreDataStack.swift */; };
 		9CF23C3D1DA9F54400AEF582 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C3B1DA9F54400AEF582 /* Model.xcdatamodeld */; };
 		9CF23C401DABF22D00AEF582 /* MusicBook+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C3E1DABF22D00AEF582 /* MusicBook+CoreDataClass.swift */; };
@@ -79,7 +79,7 @@
 		9CF23C2D1DA84A7B00AEF582 /* BookShelf30X30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BookShelf30X30.png; path = Assets.xcassets/BookShelf30X30.png; sourceTree = "<group>"; };
 		9CF23C2F1DA84BFC00AEF582 /* AddToLibrary30X30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AddToLibrary30X30.png; path = Assets.xcassets/AddToLibrary30X30.png; sourceTree = "<group>"; };
 		9CF23C311DA850BA00AEF582 /* Settings30X30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Settings30X30.png; path = Assets.xcassets/Settings30X30.png; sourceTree = "<group>"; };
-		9CF23C331DA854C400AEF582 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9CF23C331DA854C400AEF582 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		9CF23C381DA9F03100AEF582 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9CF23C3C1DA9F54400AEF582 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9CF23C3E1DABF22D00AEF582 /* MusicBook+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MusicBook+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 			children = (
 				9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */,
 				9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */,
-				9CF23C331DA854C400AEF582 /* SettingsViewController.swift */,
+				9CF23C331DA854C400AEF582 /* InfoViewController.swift */,
 				9C813B3F1DAC985B00D09314 /* DetailViewController.swift */,
 				9C813B3D1DAC504500D09314 /* BarcodeReaderViewController.swift */,
 			);
@@ -383,7 +383,7 @@
 				9C192A8F1D9DA01A00B6D77A /* Constants.swift in Sources */,
 				9C813B441DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift in Sources */,
 				9CF23C3D1DA9F54400AEF582 /* Model.xcdatamodeld in Sources */,
-				9CF23C341DA854C400AEF582 /* SettingsViewController.swift in Sources */,
+				9CF23C341DA854C400AEF582 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

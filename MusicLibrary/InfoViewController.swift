@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  InfoViewController.swift
 //  MusicLibrary
 //
 //  Created by Jena Grafton on 10/7/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class InfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
