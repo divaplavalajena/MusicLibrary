@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+let myNotificationZeroResultsFound = "zeroResultsFound"
+
 class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet var addToLibraryTableView: UITableView!
@@ -45,6 +47,8 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             }))
             self.present(alert, animated: true, completion: nil)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(zeroResultsFoundAlert), name: NSNotification.Name(rawValue: myNotificationZeroResultsFound), object: nil)
 
         
         if fetchedResultsController.fetchedObjects?.count == 0 {
@@ -68,10 +72,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         //self.navigationItem.rightBarButtonItem = self.editButtonItem
-        /**
-        let rightButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: Selector("showEditing:"))
-        self.navigationItem.rightBarButtonItem = rightButton
-        **/
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddToLibraryTableViewController.editButtonPressed))
         
@@ -84,15 +84,16 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         //Make the search bar a delegate of self so that keyboard responds to button tap
         searchBar.delegate = self
         
-        if zeroItemsFound == true {
-            let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
-                self.dismiss(animated: true, completion: nil)
-            }))
-            self.present(alert, animated: true, completion: nil)
-        }
         
         
+    }
+    
+    func zeroResultsFoundAlert() {
+        let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -239,7 +240,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     // Override to support conditional editing of the table view.
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        
         return true
     }
 
@@ -251,6 +251,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             if let musicBook = fetchedResultsController.object(at: indexPath) as? MusicBook {
                 sharedContext.delete(musicBook)
                 self.saveToBothContexts()
+                print("*** *** *** DELETE called and book deleted from Core Data. *** *** ***")
             }
         }
     }
@@ -264,13 +265,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         }
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        //addToLibraryTableView.setEditing(addToLibraryTableView.isEditing, animated: true)
-        //self.addToLibraryTableView.allowsSelectionDuringEditing = editing
-        //super.setEditing(editing, animated: animated)
-        //addToLibraryTableView.reloadData()
-    }
- 
     
     //Added from CoreDataTableViewController
     // MARK: - CoreDataTableViewController (Table Data Source)
