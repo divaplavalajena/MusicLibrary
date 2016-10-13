@@ -160,7 +160,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             
             let trimmedCode = code.trimmingCharacters(in: CharacterSet.whitespaces)
             
-            GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error) in
+            GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error, zeroItemsFound) in
                 //code to take array of dictionaries (bookDictionary) and init CoreData info
                 if let bookDictionary = bookDictionary {
                     
@@ -199,7 +199,14 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
                         }
 
                     }
-                } else {
+                } else if zeroItemsFound == true {
+                    print("Zero items were returned from search")
+                    self.dismiss(animated: true, completion: {
+                        //AddToLibraryTableViewController.zeroItemsFound = zeroItemsFound
+                    })
+                    
+                }else {
+                    print(error)
                     print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
                 }
             })

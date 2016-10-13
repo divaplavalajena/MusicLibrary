@@ -61,14 +61,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tet-xs-XS8">
-                                <mutableString key="text">This app will allow users to scan an ISBN barcode on a book in their music library or type in the ISBN manually. Information on the music book will populate the views including Title, Google ID, ISBN, and even an image.
+                                <string key="text">This app will allow users to scan an ISBN barcode on a book in their music library or type in the ISBN manually. Information on the music book will populate the views including Title, Google ID, ISBN, and even an image.
 
 Users should only type in numbers into the text field, no need for hashes or slashes!
 
 Duplicates are prevented based on the Google ID.
 If you notice a duplicate, check the Google ID as it means there is most likely more than one edition of the music book.
 
-After loading the music book into your personal music library, simply tap on the book you desire and you can view the detailed information you downloaded!</mutableString>
+After loading the music book into your personal music library, simply tap on the book you desire and you can view the detailed information you downloaded!</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -168,7 +168,6 @@ After loading the music book into your personal music library, simply tap on the
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bookImageView" destination="jFG-5r-RMV" id="mvu-ZP-pjX"/>
                                             <outlet property="subtitleLabel" destination="xHL-pL-qFV" id="0vn-gj-Kao"/>
@@ -261,7 +260,6 @@ After loading the music book into your personal music library, simply tap on the
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="bookImageView" destination="Szd-Tf-uhy" id="K4Z-GT-zVa"/>
                                     <outlet property="subtitleLabel" destination="FfM-Du-qGN" id="gJU-jf-LoO"/>

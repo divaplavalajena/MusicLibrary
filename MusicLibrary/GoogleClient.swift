@@ -23,7 +23,7 @@ class GoogleClient : NSObject {
     // MARK: Google API
     
     //Get a random page number of pages searched on Flickr
-    func getBookFromGoogleBySearchISBN(_ isbn: String, completionHandlerForGoogleSearch: @escaping (_ resultsISBN: [[String:AnyObject]]?, _ error: NSError?) -> Void) {
+    func getBookFromGoogleBySearchISBN(_ isbn: String, completionHandlerForGoogleSearch: @escaping (_ resultsISBN: [[String:AnyObject]]?, _ error: NSError?, _ zeroItemsFound: Bool?) -> Void) {
         
         let isbnQuery = "isbn:" + isbn
         print(isbnQuery)
@@ -44,19 +44,21 @@ class GoogleClient : NSObject {
                 print(error)
             }
             if let error = error {
-                completionHandlerForGoogleSearch(nil, error)
+                completionHandlerForGoogleSearch(nil, error, nil)
             } else {
                 print("**************** Result of JSON parsing from taskToGetMethod before further parsing into objects  ***************************")
                 print(result)
                 
                 //How many items does the search return??
-                //TODO: If more than one item returned in search, give user option to choose which one to save in library
                 guard let numberOfBooks = result?[GoogleClient.Constants.GoogleResponseKeys.TotalItems] as? Int else {
                     displayError("Number of books - number of TotalItems not returned in JSON parsing of:   ********************")
                     print(result)
                     return
                 }
                 print("*********  The number of books returned from ISBN search is: \(numberOfBooks)  ******************")
+                if numberOfBooks == 0 {
+                    completionHandlerForGoogleSearch(nil, nil, true)
+                }
                 
                 
                 /* GUARD: Is "items" key in our result? */
@@ -220,7 +222,7 @@ class GoogleClient : NSObject {
                 print("*****************   Here is the 'bookInfoDictionary' complete with contents appended.   *************")
                 print(bookInfoDictionary)
                 
-                completionHandlerForGoogleSearch(bookInfoDictionary, nil)
+                completionHandlerForGoogleSearch(bookInfoDictionary, nil, nil)
                 
             }
             

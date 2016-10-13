@@ -14,6 +14,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     @IBOutlet var addToLibraryTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     var results: [MusicBook]?
+    var zeroItemsFound: Bool?
     
     lazy var sharedContext: NSManagedObjectContext = {
         // Get the stack
@@ -66,7 +67,13 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        /**
+        let rightButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: Selector("showEditing:"))
+        self.navigationItem.rightBarButtonItem = rightButton
+        **/
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddToLibraryTableViewController.editButtonPressed))
         
         // Set the title
         title = "Add To Music Library"
@@ -76,6 +83,14 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         
         //Make the search bar a delegate of self so that keyboard responds to button tap
         searchBar.delegate = self
+        
+        if zeroItemsFound == true {
+            let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
         
         
     }
@@ -109,7 +124,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                 
                 let trimmedCode = isbnNumber!.trimmingCharacters(in: CharacterSet.whitespaces)
                 
-                GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error) in
+                GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error, zeroItemsFound) in
                     
                     //code to take array of dictionaries (bookDictionary) and create CoreData info
                     if let bookDictionary = bookDictionary {
@@ -185,6 +200,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
 
         // Find the right musicBook for this indexpath
         let musicBook = fetchedResultsController.object(at: indexPath) as! MusicBook
+        print(musicBook)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddToCell", for: indexPath) as! LibraryCellTableViewCell
         
@@ -223,6 +239,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     // Override to support conditional editing of the table view.
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
+        
         return true
     }
 
@@ -237,6 +254,23 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             }
         }
     }
+    
+    func editButtonPressed(){
+        addToLibraryTableView.setEditing(!addToLibraryTableView.isEditing, animated: true)
+        if addToLibraryTableView.isEditing == true{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddToLibraryTableViewController.editButtonPressed))
+        }else{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddToLibraryTableViewController.editButtonPressed))
+        }
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        //addToLibraryTableView.setEditing(addToLibraryTableView.isEditing, animated: true)
+        //self.addToLibraryTableView.allowsSelectionDuringEditing = editing
+        //super.setEditing(editing, animated: animated)
+        //addToLibraryTableView.reloadData()
+    }
+ 
     
     //Added from CoreDataTableViewController
     // MARK: - CoreDataTableViewController (Table Data Source)
