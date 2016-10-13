@@ -20,6 +20,14 @@
 		9C813B441DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B421DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift */; };
 		9C813B461DAD57DF00D09314 /* LibraryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B451DAD57DF00D09314 /* LibraryCellTableViewCell.swift */; };
 		9C813B491DAECD5A00D09314 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B481DAECD5A00D09314 /* Reachability.swift */; };
+		9C813B521DAF4A0200D09314 /* BooksWithMusicNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4A1DAF4A0200D09314 /* BooksWithMusicNote.png */; };
+		9C813B531DAF4A0200D09314 /* BooksWithMusicNote40X40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4B1DAF4A0200D09314 /* BooksWithMusicNote40X40.png */; };
+		9C813B541DAF4A0200D09314 /* BooksWithMusicNote58X58.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4C1DAF4A0200D09314 /* BooksWithMusicNote58X58.png */; };
+		9C813B551DAF4A0200D09314 /* BooksWithMusicNote60X60.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4D1DAF4A0200D09314 /* BooksWithMusicNote60X60.png */; };
+		9C813B561DAF4A0200D09314 /* BooksWithMusicNote80X80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4E1DAF4A0200D09314 /* BooksWithMusicNote80X80.png */; };
+		9C813B571DAF4A0200D09314 /* BooksWithMusicNote87X87.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4F1DAF4A0200D09314 /* BooksWithMusicNote87X87.png */; };
+		9C813B581DAF4A0200D09314 /* BooksWithMusicNote120X120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B501DAF4A0200D09314 /* BooksWithMusicNote120X120.png */; };
+		9C813B591DAF4A0200D09314 /* BooksWithMusicNote180X180.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B511DAF4A0200D09314 /* BooksWithMusicNote180X180.png */; };
 		9CF23C241DA8121000AEF582 /* MyLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */; };
 		9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */; };
 		9CF23C281DA844A700AEF582 /* barcodeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C271DA844A700AEF582 /* barcodeImage.png */; };
@@ -71,6 +79,14 @@
 		9C813B421DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MusicBook+CoreDataProperties.swift"; path = "../MusicBook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C813B451DAD57DF00D09314 /* LibraryCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCellTableViewCell.swift; sourceTree = "<group>"; };
 		9C813B481DAECD5A00D09314 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		9C813B4A1DAF4A0200D09314 /* BooksWithMusicNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote.png; path = Assets.xcassets/BooksWithMusicNote.png; sourceTree = "<group>"; };
+		9C813B4B1DAF4A0200D09314 /* BooksWithMusicNote40X40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote40X40.png; path = Assets.xcassets/BooksWithMusicNote40X40.png; sourceTree = "<group>"; };
+		9C813B4C1DAF4A0200D09314 /* BooksWithMusicNote58X58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote58X58.png; path = Assets.xcassets/BooksWithMusicNote58X58.png; sourceTree = "<group>"; };
+		9C813B4D1DAF4A0200D09314 /* BooksWithMusicNote60X60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote60X60.png; path = Assets.xcassets/BooksWithMusicNote60X60.png; sourceTree = "<group>"; };
+		9C813B4E1DAF4A0200D09314 /* BooksWithMusicNote80X80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote80X80.png; path = Assets.xcassets/BooksWithMusicNote80X80.png; sourceTree = "<group>"; };
+		9C813B4F1DAF4A0200D09314 /* BooksWithMusicNote87X87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote87X87.png; path = Assets.xcassets/BooksWithMusicNote87X87.png; sourceTree = "<group>"; };
+		9C813B501DAF4A0200D09314 /* BooksWithMusicNote120X120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote120X120.png; path = Assets.xcassets/BooksWithMusicNote120X120.png; sourceTree = "<group>"; };
+		9C813B511DAF4A0200D09314 /* BooksWithMusicNote180X180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote180X180.png; path = Assets.xcassets/BooksWithMusicNote180X180.png; sourceTree = "<group>"; };
 		9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C271DA844A700AEF582 /* barcodeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = barcodeImage.png; path = Assets.xcassets/barcodeImage.png; sourceTree = "<group>"; };
@@ -206,6 +222,14 @@
 		9CF23C351DA8551D00AEF582 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9C813B4A1DAF4A0200D09314 /* BooksWithMusicNote.png */,
+				9C813B4B1DAF4A0200D09314 /* BooksWithMusicNote40X40.png */,
+				9C813B4C1DAF4A0200D09314 /* BooksWithMusicNote58X58.png */,
+				9C813B4D1DAF4A0200D09314 /* BooksWithMusicNote60X60.png */,
+				9C813B4E1DAF4A0200D09314 /* BooksWithMusicNote80X80.png */,
+				9C813B4F1DAF4A0200D09314 /* BooksWithMusicNote87X87.png */,
+				9C813B501DAF4A0200D09314 /* BooksWithMusicNote120X120.png */,
+				9C813B511DAF4A0200D09314 /* BooksWithMusicNote180X180.png */,
 				9CF23C2F1DA84BFC00AEF582 /* AddToLibrary30X30.png */,
 				9CF23C2B1DA849ED00AEF582 /* BookShelf-48.png */,
 				9CF23C311DA850BA00AEF582 /* Settings30X30.png */,
@@ -337,15 +361,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C813B531DAF4A0200D09314 /* BooksWithMusicNote40X40.png in Resources */,
 				9C192A691D9C6B1A00B6D77A /* LaunchScreen.storyboard in Resources */,
+				9C813B551DAF4A0200D09314 /* BooksWithMusicNote60X60.png in Resources */,
+				9C813B591DAF4A0200D09314 /* BooksWithMusicNote180X180.png in Resources */,
 				9CF23C2C1DA849ED00AEF582 /* BookShelf-48.png in Resources */,
+				9C813B571DAF4A0200D09314 /* BooksWithMusicNote87X87.png in Resources */,
 				9C192A661D9C6B1A00B6D77A /* Assets.xcassets in Resources */,
 				9CF23C2A1DA8474300AEF582 /* barcodeImage64X44.png in Resources */,
+				9C813B541DAF4A0200D09314 /* BooksWithMusicNote58X58.png in Resources */,
+				9C813B521DAF4A0200D09314 /* BooksWithMusicNote.png in Resources */,
 				9CF23C281DA844A700AEF582 /* barcodeImage.png in Resources */,
 				9CF23C2E1DA84A7B00AEF582 /* BookShelf30X30.png in Resources */,
 				9CF23C321DA850BA00AEF582 /* Settings30X30.png in Resources */,
 				9C192A641D9C6B1A00B6D77A /* Main.storyboard in Resources */,
 				9CF23C301DA84BFC00AEF582 /* AddToLibrary30X30.png in Resources */,
+				9C813B561DAF4A0200D09314 /* BooksWithMusicNote80X80.png in Resources */,
+				9C813B581DAF4A0200D09314 /* BooksWithMusicNote120X120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
