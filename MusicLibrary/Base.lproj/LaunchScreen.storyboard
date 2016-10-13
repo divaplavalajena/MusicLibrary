@@ -19,23 +19,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BooksWithMusicNote.png" translatesAutoresizingMaskIntoConstraints="NO" id="SGN-dw-OAn"/>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music Library" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6N-F1-6kF">
+                                <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="96" id="hYW-yn-ani"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Georgia-Italic" family="Georgia" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BooksWithMusicNote.png" translatesAutoresizingMaskIntoConstraints="NO" id="vf4-UK-rAM"/>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="S6N-F1-6kF" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="24" id="6p4-pl-616"/>
-                            <constraint firstItem="SGN-dw-OAn" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="IKq-vq-Glt"/>
-                            <constraint firstAttribute="trailing" secondItem="SGN-dw-OAn" secondAttribute="trailing" id="JA5-AC-XBX"/>
-                            <constraint firstItem="S6N-F1-6kF" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="MnS-Kd-Jy2"/>
-                            <constraint firstItem="S6N-F1-6kF" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="PKe-m9-bRU"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="SGN-dw-OAn" secondAttribute="bottom" id="Pvz-Qp-y0T"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="S6N-F1-6kF" secondAttribute="bottom" constant="527" id="SZo-uD-cWl"/>
-                            <constraint firstItem="SGN-dw-OAn" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="Ulc-VT-Gb4"/>
+                            <constraint firstItem="S6N-F1-6kF" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="27" id="Bhf-Wm-eSZ"/>
+                            <constraint firstItem="S6N-F1-6kF" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="JTW-1y-YHn"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="vf4-UK-rAM" secondAttribute="bottom" constant="123" id="Msf-cm-umL"/>
+                            <constraint firstItem="S6N-F1-6kF" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="Ukn-aZ-7GQ"/>
+                            <constraint firstItem="vf4-UK-rAM" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="ctg-fZ-3vu"/>
+                            <constraint firstItem="vf4-UK-rAM" firstAttribute="top" secondItem="S6N-F1-6kF" secondAttribute="bottom" constant="8" id="p9m-BY-58w"/>
+                            <constraint firstAttribute="trailing" secondItem="vf4-UK-rAM" secondAttribute="trailing" id="rO7-Xn-MUe"/>
                         </constraints>
                     </view>
                 </viewController>

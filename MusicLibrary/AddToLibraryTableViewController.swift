@@ -233,6 +233,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         if editingStyle == .delete {
             if let musicBook = fetchedResultsController.object(at: indexPath) as? MusicBook {
                 sharedContext.delete(musicBook)
+                self.saveToBothContexts()
             }
         }
     }

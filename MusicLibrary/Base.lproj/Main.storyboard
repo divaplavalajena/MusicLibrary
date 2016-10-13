@@ -82,7 +82,7 @@ After loading the music book into your personal music library, simply tap on the
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.52521940765563668" green="0.802961768953664" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="cYH-Ov-8rv" firstAttribute="trailing" secondItem="Vge-C1-CSK" secondAttribute="trailingMargin" id="44E-JW-Ni8"/>
                             <constraint firstItem="wa9-K1-SgB" firstAttribute="top" secondItem="Wut-8u-hZR" secondAttribute="bottom" constant="8" id="6OH-XV-1vU"/>
@@ -168,6 +168,7 @@ After loading the music book into your personal music library, simply tap on the
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="bookImageView" destination="jFG-5r-RMV" id="mvu-ZP-pjX"/>
                                             <outlet property="subtitleLabel" destination="xHL-pL-qFV" id="0vn-gj-Kao"/>
@@ -260,6 +261,7 @@ After loading the music book into your personal music library, simply tap on the
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="bookImageView" destination="Szd-Tf-uhy" id="K4Z-GT-zVa"/>
                                     <outlet property="subtitleLabel" destination="FfM-Du-qGN" id="gJU-jf-LoO"/>
@@ -427,7 +429,7 @@ After loading the music book into your personal music library, simply tap on the
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2Bq-2S-KWF" firstAttribute="trailing" secondItem="dtf-mQ-4HI" secondAttribute="trailing" id="1nY-WI-toc"/>
                             <constraint firstItem="cTG-QV-AJ6" firstAttribute="top" secondItem="bbM-bE-Q5e" secondAttribute="bottom" constant="8" symbolic="YES" id="205-ZO-yeE"/>
@@ -522,6 +524,8 @@ After loading the music book into your personal music library, simply tap on the
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.52521940769999997" green="0.80296176900000005" blue="0.81062500000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="OBw-4d-w1a" kind="relationship" relationship="viewControllers" id="hdm-ia-ptf"/>
