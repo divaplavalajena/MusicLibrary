@@ -10,7 +10,14 @@ import UIKit
 import AVFoundation
 import CoreData
 
+protocol BarcodeReaderDelegate {
+    
+    func barcodeReaderDidFail()
+}
+
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+    
+    var delegate: BarcodeReaderDelegate?
     
     //Properties:
     var session: AVCaptureSession!
@@ -26,8 +33,6 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(BarcodeReaderViewController.self), name: NSNotification.Name(rawValue: myNotificationZeroResultsFound), object: nil)
         
         // Create a session object.
         session = AVCaptureSession()
@@ -203,9 +208,8 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
                     }
                 } else if zeroItemsFound == true {
                     print("Zero items were returned from search")
-                    self.dismiss(animated: true, completion: {
-                        NotificationCenter.default.post(name: myNotificationZeroResultsFound, object: self)
-                    })
+                    self.delegate?.barcodeReaderDidFail()
+                    self.dismiss(animated: true, completion: {})
                     
                 }else {
                     print(error)

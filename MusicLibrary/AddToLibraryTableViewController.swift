@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-let myNotificationZeroResultsFound = "zeroResultsFound"
 
 class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -29,8 +28,11 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
         //performSegue(withIdentifier: "displayBarcodeReaderVC", sender: sender)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "BarcodeReaderViewController")
+        let controller = storyboard.instantiateViewController(withIdentifier: "BarcodeReaderViewController") as! BarcodeReaderViewController
+        controller.delegate = self
+        controller.navigationItem.leftItemsSupplementBackButton = true
         self.present(controller, animated: true, completion: nil)
+        
     }
     
     
@@ -48,8 +50,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             self.present(alert, animated: true, completion: nil)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(zeroResultsFoundAlert), name: NSNotification.Name(rawValue: myNotificationZeroResultsFound), object: nil)
-
         
         if fetchedResultsController.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
@@ -63,16 +63,14 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        //self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        //Edit button explicitly instantiated with method to use since table view is added to view and not baked in to view like MyLibraryTVC
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(AddToLibraryTableViewController.editButtonPressed))
         
         // Set the title
@@ -84,8 +82,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         //Make the search bar a delegate of self so that keyboard responds to button tap
         searchBar.delegate = self
         
-        
-        
     }
     
     func zeroResultsFoundAlert() {
@@ -95,14 +91,13 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         }))
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Search Bar methods
-    //var customDelegate: UISearchBarDelegate!
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dismissKeyboard()
@@ -113,64 +108,56 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             let isbnNumber = searchBar.text
             
             // Let the user know we've found something.
-            
-            let alert = UIAlertController(title: "Search this Barcode?", message: isbnNumber, preferredStyle: UIAlertControllerStyle.alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { (action) -> Void in
-                self.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(cancelAction)
-            alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
-                
-                // Remove the spaces.
-                
-                let trimmedCode = isbnNumber!.trimmingCharacters(in: CharacterSet.whitespaces)
-                
-                GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error, zeroItemsFound) in
-                    
-                    //code to take array of dictionaries (bookDictionary) and create CoreData info
-                    if let bookDictionary = bookDictionary {
-                        
-                        print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
-                        print(bookDictionary)
-                        
-                        DispatchQueue.main.async {
-                            //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
-                            //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
-                            let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
-                            do {
-                                let results = try self.sharedContext.fetch(request) as! [MusicBook]
 
-                                //perform GoogleClient mapping into Core Data ready objects
-                                _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
-                                    let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
-                                    //googleID is primary key to test for existence in core data
-                                    let testGoogleID = book.googleID
-                                    //if results count is not zero
-                                    if results.count != 0 {
-                                        //where the googleID is equal or found, don't add to core data and delete from context to prevent saving
-                                        if results.contains(where: { $0.googleID == testGoogleID}) {
-                                            print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
-                                            print("Here is \(testGoogleID) that is equal to fetch.")
-                                            self.sharedContext.delete(book)
-                                            //where googleID is NOT equal or found, DO add to core data by saving the context.
-                                        } else if results.contains(where: { $0.googleID != testGoogleID}) {
-                                            print("This will save because fetch googleID is != to \(testGoogleID).")
-                                            self.saveToBothContexts()
-                                        }
+            // Remove the spaces.
+            let trimmedCode = isbnNumber!.trimmingCharacters(in: CharacterSet.whitespaces)
+            
+            GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error, zeroItemsFound) in
+                //code to take array of dictionaries (bookDictionary) and create CoreData info
+                if let bookDictionary = bookDictionary {
+                    
+                    print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
+                    print(bookDictionary)
+                    
+                    DispatchQueue.main.async {
+                        //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
+                        //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
+                        let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
+                        do {
+                            let results = try self.sharedContext.fetch(request) as! [MusicBook]
+                            
+                            //perform GoogleClient mapping into Core Data ready objects
+                            _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
+                                let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
+                                //googleID is primary key to test for existence in core data
+                                let testGoogleID = book.googleID
+                                //if results count is not zero
+                                if results.count != 0 {
+                                    //where the googleID is equal or found, don't add to core data and delete from context to prevent saving
+                                    if results.contains(where: { $0.googleID == testGoogleID}) {
+                                        print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
+                                        print("Here is \(testGoogleID) that is equal to fetch.")
+                                        self.sharedContext.delete(book)
+                                        //where googleID is NOT equal or found, DO add to core data by saving the context.
+                                    } else if results.contains(where: { $0.googleID != testGoogleID}) {
+                                        print("This will save because fetch googleID is != to \(testGoogleID).")
+                                        self.saveToBothContexts()
                                     }
-                                    return book
                                 }
-                            } catch let error as NSError {
-                                print("Fetch failed: \(error.localizedDescription)")
+                                return book
                             }
+                        } catch let error as NSError {
+                            print("Fetch failed: \(error.localizedDescription)")
                         }
-                    } else {
-                        print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
                     }
-                })
-                self.dismiss(animated: true, completion: {})
-            }))
-            self.present(alert, animated: true, completion: nil)
+                } else if zeroItemsFound == true {
+                    print("Zero items were returned from search")
+                    self.zeroResultsFoundAlert()
+                } else {
+                    print(error)
+                    print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
+                }
+            })
         }
     }
     
@@ -191,14 +178,14 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         searchBar.resignFirstResponder()
     }
     
-
+    
     // MARK: - Table view data source
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // This method must be implemented by our subclass. There's no way
         // CoreDataTableViewController can know what type of cell we want to
         // use.
-
+        
         // Find the right musicBook for this indexpath
         let musicBook = fetchedResultsController.object(at: indexPath) as! MusicBook
         print(musicBook)
@@ -222,14 +209,11 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                             cell.bookImageView.image = image
                         }
                     }
-                    
                 })
             }
         } else if musicBook.imageData != nil {
             cell.bookImageView.image = UIImage(data: musicBook.imageData as! Data)
         }
- 
-
         return cell
     }
     
@@ -242,9 +226,8 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         // Return false if you do not want the specified item to be editable.
         return true
     }
-
- 
-
+    
+    
     // Override to support editing the table view.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -266,7 +249,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     }
     
     
-    //Added from CoreDataTableViewController
     // MARK: - CoreDataTableViewController (Table Data Source)
     func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections?.count ?? 0
@@ -278,7 +260,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return fetchedResultsController.sections![section].name
+        return "Recently Added"
     }
     
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
@@ -360,12 +342,12 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         let stack = (UIApplication.shared.delegate as! AppDelegate).stack
         stack.saveBothContexts()
     }
-
+    
     
     
     
     // MARK: - Navigation
-
+    
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -384,11 +366,11 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                 //detailVC.navigationController?.pushViewController(detailVC, animated: true)
                 
             }
-   
+            
         }
     }
     
-        
+    
     /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -404,6 +386,24 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
      }
      */
 
- 
-
 }
+
+
+extension AddToLibraryTableViewController: BarcodeReaderDelegate {
+    
+    // Adheres to protocol on BarcodeReaderVC so that BarcodeReaderVC can
+    //    "pass" info back here to AddToLibraryTVC
+    func barcodeReaderDidFail() {
+        //Zero Items Found - present Alert View Controller
+        print("bar code reader did complete")
+        zeroResultsFoundAlert()
+    }
+}
+
+
+
+
+
+
+
+
