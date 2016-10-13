@@ -217,12 +217,39 @@ After loading the music book into your personal music library, simply tap on the
                     <view key="view" contentMode="scaleToFill" id="Mc6-mO-wUw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esq-IK-KAP">
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="uBu-Ux-5om"/>
+                                    <constraint firstAttribute="height" constant="38" id="unn-Qy-end"/>
+                                </constraints>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButton:" destination="xVB-i4-IZj" eventType="touchUpInside" id="FLq-Xc-BvV"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syM-1y-gUh">
+                                <frame key="frameInset" minY="74" width="375" height="593"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="esq-IK-KAP" firstAttribute="top" secondItem="17c-5R-r90" secondAttribute="bottom" constant="8" id="jkP-bO-L5h"/>
+                            <constraint firstItem="esq-IK-KAP" firstAttribute="trailing" secondItem="Mc6-mO-wUw" secondAttribute="trailingMargin" id="yzt-i3-Bp6"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="syM-1y-gUh" id="i3q-nd-JYp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIF-pz-bAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2343" y="1178"/>
+            <point key="canvasLocation" x="2341.5999999999999" y="1177.961019490255"/>
         </scene>
         <!--My Library Table View Controller-->
         <scene sceneID="drx-zs-dxg">

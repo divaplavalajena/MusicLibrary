@@ -21,9 +21,6 @@ extension GoogleClient {
             static let APIHost = "www.googleapis.com"
             static let APIPath = "/books/v1/"
             
-            //for later version with auth for account sync
-            //static let AuthorizationURL = "https://www.themoviedb.org/authenticate/"
-            //static let AccountURL = "https://www.themoviedb.org/account/"
         }
         
         // MARK: Methods
@@ -36,29 +33,16 @@ extension GoogleClient {
         struct GoogleParameterKeys {
             
             static let APIKey = "key"
-            
             static let SearchMethodKey = "q"
-            
             static let ISBN = "isbn:"
-            
             static let JSONCallback = "callback"
-            
-            //TODO: determine if I need these?
-            //static let SessionID = "session_id"
-            //static let RequestToken = "request_token"
-            //static let Query = "query"
             
         }
         
         // MARK: Google Parameter Values
         struct GoogleParameterValues {
             static let SearchMethodValue = ""
-            
-            static let ISBNValue = "" //actual ISBN of book
-            
             static let APIKey = "AIzaSyAcmcez-BwQI4iRIBBlhgtkc872zYgzZ5w"
-            
-            //static let ResponseFormat = "json"
             
         }
         

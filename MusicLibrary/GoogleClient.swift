@@ -68,8 +68,8 @@ class GoogleClient : NSObject {
                     return
                 }
                 
-                print("**********  The 'items' returned in the JSON data ***********************")
-                print(items)
+                //print("**********  The 'items' returned in the JSON data ***********************")
+                //print(items)
                 
                 for book in items {
                     var loopDictionary = [String:AnyObject]()
@@ -101,8 +101,8 @@ class GoogleClient : NSObject {
                     
                     //TODO: change to not use IF statement because its already an optional in class
                     if let subtitle = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Subtitle] as? String {
-                        print("**************************  The 'subtitle' returned in the results  ***********************")
-                        print(subtitle)
+                        //print("**************************  The 'subtitle' returned in the results  ***********************")
+                        //print(subtitle)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.Subtitle] = subtitle as AnyObject
                     } else {
                         displayError("**************************   The 'subtitle' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -110,8 +110,8 @@ class GoogleClient : NSObject {
                     
                     
                     if let authors = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Authors] as? [String] {
-                        print("**************************  The 'authors' returned in the results  ***********************")
-                        print(authors)
+                        //print("**************************  The 'authors' returned in the results  ***********************")
+                        //print(authors)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.Authors] = authors as AnyObject
                     } else {
                         displayError("**************************   The 'authors' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -122,15 +122,15 @@ class GoogleClient : NSObject {
                         displayError("**************************   The 'industryIdentifiers' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
                         return
                     }
-                    print("**************************  The 'industryIdentifiers' returned in the results  ***********************")
-                    print(industryIdentifiers)
+                    //print("**************************  The 'industryIdentifiers' returned in the results  ***********************")
+                    //print(industryIdentifiers)
                     
                     
                     for isbn in industryIdentifiers  {
                         if isbn[GoogleClient.Constants.GoogleResponseKeys.isbnType] == GoogleClient.Constants.GoogleResponseValues.typeISBN10 {
                             if let isbn10 = isbn[GoogleClient.Constants.GoogleResponseKeys.isbnIdentifier] {
-                                print("**************************  The 'isbn10' returned in the results  ***********************")
-                                print(isbn10)
+                                //print("**************************  The 'isbn10' returned in the results  ***********************")
+                                //print(isbn10)
                                 loopDictionary[GoogleClient.Constants.GoogleResponseValues.typeISBN10] = isbn10 as AnyObject
                             } else {
                                 displayError("**************************   The 'isbn10' in the 'industryIdentifiers' level of JSON data was NOT found:  *****************")
@@ -140,8 +140,8 @@ class GoogleClient : NSObject {
                         if isbn[GoogleClient.Constants.GoogleResponseKeys.isbnType] ==
                             GoogleClient.Constants.GoogleResponseValues.typeISBN13 {
                             if let isbn13 = isbn[GoogleClient.Constants.GoogleResponseKeys.isbnIdentifier] {
-                                print("**************************  The 'isbn13' returned in the results  ***********************")
-                                print(isbn13)
+                                //print("**************************  The 'isbn13' returned in the results  ***********************")
+                                //print(isbn13)
                                 loopDictionary[GoogleClient.Constants.GoogleResponseValues.typeISBN13] = isbn13 as AnyObject
                             } else {
                                 displayError("**************************   The 'isbn13' in the 'industryIdentifiers' level of JSON data was NOT found:  *****************")
@@ -152,8 +152,8 @@ class GoogleClient : NSObject {
                     }
                     
                     if let printType = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PrintType] as? String {
-                        print("**************************  The 'printType' returned in the results  ***********************")
-                        print(printType)
+                        //print("**************************  The 'printType' returned in the results  ***********************")
+                        //print(printType)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.PrintType] = printType as AnyObject
                     } else {
                         displayError("**************************   The 'printType' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -161,8 +161,8 @@ class GoogleClient : NSObject {
                     
                     
                     if let pageCount = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PageCount] as? String {
-                        print("**************************  The 'pageCount' returned in the results  ***********************")
-                        print(pageCount)
+                        //print("**************************  The 'pageCount' returned in the results  ***********************")
+                        //print(pageCount)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.PageCount] = pageCount as AnyObject
                     } else {
                         displayError("**************************   The 'pageCount' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -170,8 +170,8 @@ class GoogleClient : NSObject {
                     
                     
                     if let publisher = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.Publisher] as? String {
-                        print("**************************  The 'publisher' returned in the results  ***********************")
-                        print(publisher)
+                        //print("**************************  The 'publisher' returned in the results  ***********************")
+                        //print(publisher)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.Publisher] = publisher as AnyObject
                     } else {
                         displayError("**************************   The 'publisher' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -179,16 +179,16 @@ class GoogleClient : NSObject {
                     
                     
                     if let publishedDate = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] as? String {
-                        print("**************************  The 'publishedDate' returned in the results  ***********************")
-                        print(publishedDate)
+                        //print("**************************  The 'publishedDate' returned in the results  ***********************")
+                        //print(publishedDate)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.PublishedDate] = publishedDate as AnyObject
                     } else {
                         displayError("**************************   The 'publishedDate' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
                     }
                     
                     if let webLink = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.PreviewLink] as? String {
-                        print("**************************  The 'weblink' returned in the results  ***********************")
-                        print(webLink)
+                        //print("**************************  The 'weblink' returned in the results  ***********************")
+                        //print(webLink)
                         loopDictionary[GoogleClient.Constants.GoogleResponseKeys.PreviewLink] = webLink as AnyObject
                     } else {
                         displayError("**************************   The 'webLink' in the singleBookVolumeInfo level of JSON data was NOT found:  *****************")
@@ -196,8 +196,8 @@ class GoogleClient : NSObject {
                     
                     if let imageLinks = singleBookVolumeInfo[GoogleClient.Constants.GoogleResponseKeys.ImageLinks] as? [String: AnyObject] {
                         if let thumbnailImageLink = imageLinks[GoogleClient.Constants.GoogleResponseKeys.ThumbnailImageLink] as? String {
-                            print("**************************  The 'thumbnailImageLink' returned in the results  ***********************")
-                            print(thumbnailImageLink)
+                            //print("**************************  The 'thumbnailImageLink' returned in the results  ***********************")
+                            //print(thumbnailImageLink)
                             loopDictionary[GoogleClient.Constants.GoogleResponseKeys.ThumbnailImageLink] = thumbnailImageLink as AnyObject
                         } else {
                             displayError("**************************   The 'thumbnailImageLink' in the 'imageLinks' level of JSON data was NOT found:  *****************")
@@ -205,13 +205,9 @@ class GoogleClient : NSObject {
                     }
                     
                     let date = Date()
-                    //let dateFormatter = DateFormatter()
-                    //dateFormatter.dateFormat = "MMMM dd yyyy"
-                    //let dateAdded = dateFormatter.string(from: date)
                     loopDictionary["dateAdded"] = date as AnyObject?
-                    print("***** ***** ***** This is the dateAdded that created just now to reflect date added to library.  ***** ***** ****")
-                    print(date)
-                    
+                    //print("***** ***** ***** This is the dateAdded that created just now to reflect date added to library.  ***** ***** ****")
+                    //print(date)
                     
                     //each time through loop append dictionary to array of dictionaries
                     print("******  This is the 'loopDictionary' after an iteration of the loop.  *****")
@@ -225,9 +221,7 @@ class GoogleClient : NSObject {
                 completionHandlerForGoogleSearch(bookInfoDictionary, nil, nil)
                 
             }
-            
         }
-        
     }
     
     

@@ -17,6 +17,13 @@ protocol BarcodeReaderDelegate {
 
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
+    @IBOutlet var cameraView: UIView!
+    
+    @IBAction func cancelButton(_ sender: AnyObject) {
+        self.dismiss(animated: true) {}
+        
+    }
+    
     var delegate: BarcodeReaderDelegate?
     
     //Properties:
@@ -83,9 +90,9 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         // Add previewLayer and have it show the video data.
         
         previewLayer = AVCaptureVideoPreviewLayer(session: session);
-        previewLayer.frame = view.layer.bounds;
+        previewLayer.frame = cameraView.layer.bounds;
         previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        view.layer.addSublayer(previewLayer);
+        cameraView.layer.addSublayer(previewLayer);
         
         // Begin the capture session.
         
