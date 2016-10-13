@@ -26,7 +26,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     @IBAction func scanBarcode(_ sender: AnyObject) {
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
-        //performSegue(withIdentifier: "displayBarcodeReaderVC", sender: sender)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "BarcodeReaderViewController") as! BarcodeReaderViewController
         controller.delegate = self
@@ -84,13 +83,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         
     }
     
-    func zeroResultsFoundAlert() {
-        let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
-            self.dismiss(animated: true, completion: nil)
-        }))
-        self.present(alert, animated: true, completion: nil)
-    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -106,8 +99,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             print("***** **** *** ISBN manual search NOT completed due to empty text field.  *** **** *****")
         } else {
             let isbnNumber = searchBar.text
-            
-            // Let the user know we've found something.
 
             // Remove the spaces.
             let trimmedCode = isbnNumber!.trimmingCharacters(in: CharacterSet.whitespaces)
@@ -138,6 +129,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                                         print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
                                         print("Here is \(testGoogleID) that is equal to fetch.")
                                         self.sharedContext.delete(book)
+                                        self.bookAlreadyInLibrary()
                                         //where googleID is NOT equal or found, DO add to core data by saving the context.
                                     } else if results.contains(where: { $0.googleID != testGoogleID}) {
                                         print("This will save because fetch googleID is != to \(testGoogleID).")
@@ -197,7 +189,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         cell.subtitleLabel.text = musicBook.isbn13
         
         
-        //TODO: implement code to use imageLink to get image and save image to CoreData and then display it
+        // code to use imageLink with taskForGetImage to get image and save image to CoreData and then display it
         if musicBook.imageData == nil {
             if let imagePath = musicBook.imageLink {
                 let _ = GoogleClient.sharedInstance().taskForGETImage(imagePath, completionHandlerForImage: { (imageData, error) in
@@ -360,31 +352,29 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                 
                 let indexPath = self.addToLibraryTableView.indexPathForSelectedRow
                 let musicBook = self.fetchedResultsController.object(at: indexPath!) as? MusicBook
-                //let detailVC = (segue.destination as? UINavigationController)?.topViewController as! DetailViewController
                 detailVC.detailItem = musicBook
                 detailVC.navigationItem.leftItemsSupplementBackButton = true
-                //detailVC.navigationController?.pushViewController(detailVC, animated: true)
-                
             }
-            
         }
     }
     
+    // MARK: Alert helper methods
     
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
+    func zeroResultsFoundAlert() {
+        let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
+    func bookExistsAlert() {
+        let alert = UIAlertController(title: "Book exists in library already.", message: "Please try another ISBN to add to your library.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }
 
@@ -397,6 +387,13 @@ extension AddToLibraryTableViewController: BarcodeReaderDelegate {
         //Zero Items Found - present Alert View Controller
         print("bar code reader did complete")
         zeroResultsFoundAlert()
+    }
+    
+    func bookAlreadyInLibrary() {
+        //Core Data determined the book is already in the library
+        print("Book already in Core Data - See the library contents.")
+        bookExistsAlert()
+        
     }
 }
 

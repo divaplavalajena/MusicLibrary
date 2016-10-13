@@ -144,12 +144,8 @@ class MyLibraryTableViewController: UITableViewController, NSFetchedResultsContr
                 //let detailVC = (segue.destination as? UINavigationController)?.topViewController as! DetailViewController
                 detailVC.detailItem = musicBook
                 detailVC.navigationItem.leftItemsSupplementBackButton = true
-                
             }
-            
-            
         }
-
     }
     
     
@@ -250,22 +246,6 @@ class MyLibraryTableViewController: UITableViewController, NSFetchedResultsContr
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
     }
-
-
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
  
 
 }

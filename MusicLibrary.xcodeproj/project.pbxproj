@@ -28,6 +28,8 @@
 		9C813B571DAF4A0200D09314 /* BooksWithMusicNote87X87.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B4F1DAF4A0200D09314 /* BooksWithMusicNote87X87.png */; };
 		9C813B581DAF4A0200D09314 /* BooksWithMusicNote120X120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B501DAF4A0200D09314 /* BooksWithMusicNote120X120.png */; };
 		9C813B591DAF4A0200D09314 /* BooksWithMusicNote180X180.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C813B511DAF4A0200D09314 /* BooksWithMusicNote180X180.png */; };
+		9CB724A41DB02B2F00C1612C /* Rutter Requiem UPC with ISBN.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 9CB724A31DB02B2F00C1612C /* Rutter Requiem UPC with ISBN.JPG */; };
+		9CB724A61DB02B3800C1612C /* The Telephone UPC with ISBN.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 9CB724A51DB02B3800C1612C /* The Telephone UPC with ISBN.JPG */; };
 		9CF23C241DA8121000AEF582 /* MyLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */; };
 		9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */; };
 		9CF23C281DA844A700AEF582 /* barcodeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C271DA844A700AEF582 /* barcodeImage.png */; };
@@ -87,6 +89,8 @@
 		9C813B4F1DAF4A0200D09314 /* BooksWithMusicNote87X87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote87X87.png; path = Assets.xcassets/BooksWithMusicNote87X87.png; sourceTree = "<group>"; };
 		9C813B501DAF4A0200D09314 /* BooksWithMusicNote120X120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote120X120.png; path = Assets.xcassets/BooksWithMusicNote120X120.png; sourceTree = "<group>"; };
 		9C813B511DAF4A0200D09314 /* BooksWithMusicNote180X180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BooksWithMusicNote180X180.png; path = Assets.xcassets/BooksWithMusicNote180X180.png; sourceTree = "<group>"; };
+		9CB724A31DB02B2F00C1612C /* Rutter Requiem UPC with ISBN.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Rutter Requiem UPC with ISBN.JPG"; sourceTree = "<group>"; };
+		9CB724A51DB02B3800C1612C /* The Telephone UPC with ISBN.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "The Telephone UPC with ISBN.JPG"; sourceTree = "<group>"; };
 		9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C271DA844A700AEF582 /* barcodeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = barcodeImage.png; path = Assets.xcassets/barcodeImage.png; sourceTree = "<group>"; };
@@ -171,6 +175,8 @@
 		9C192A7D1D9C6B1A00B6D77A /* MusicLibraryUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9CB724A31DB02B2F00C1612C /* Rutter Requiem UPC with ISBN.JPG */,
+				9CB724A51DB02B3800C1612C /* The Telephone UPC with ISBN.JPG */,
 				9C192A7E1D9C6B1A00B6D77A /* MusicLibraryUITests.swift */,
 				9C192A801D9C6B1A00B6D77A /* Info.plist */,
 			);
@@ -392,6 +398,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CB724A41DB02B2F00C1612C /* Rutter Requiem UPC with ISBN.JPG in Resources */,
+				9CB724A61DB02B3800C1612C /* The Telephone UPC with ISBN.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

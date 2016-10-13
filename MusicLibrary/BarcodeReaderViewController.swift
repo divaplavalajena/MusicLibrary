@@ -13,6 +13,8 @@ import CoreData
 protocol BarcodeReaderDelegate {
     
     func barcodeReaderDidFail()
+    
+    func bookAlreadyInLibrary()
 }
 
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -200,6 +202,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
                                         print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
                                         print("Here is \(testGoogleID) that is equal to fetch.")
                                         self.sharedContext.delete(book)
+                                        self.delegate?.bookAlreadyInLibrary()
                                      //where googleID is NOT equal or found, DO add to core data by saving the context.
                                     } else if results.contains(where: { $0.googleID != testGoogleID}) {
                                         print("This will save because fetch googleID is != to \(testGoogleID).")
