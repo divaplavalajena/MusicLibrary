@@ -17,7 +17,7 @@ extension MusicBook {
     }
 
     @NSManaged public var authors: String?
-    @NSManaged public var googleID: String?
+    @NSManaged public var googleID: String!
     @NSManaged public var imageData: NSData?
     @NSManaged public var imageLink: String?
     @NSManaged public var isbn10: String?

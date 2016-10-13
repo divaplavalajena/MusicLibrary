@@ -3,7 +3,7 @@
     <entity name="MusicBook" representedClassName=".MusicBook" syncable="YES">
         <attribute name="authors" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="googleID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="googleID" attributeType="String" syncable="YES"/>
         <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="imageLink" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isbn10" optional="YES" attributeType="String" syncable="YES"/>

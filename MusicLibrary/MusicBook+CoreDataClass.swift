@@ -23,7 +23,7 @@ public class MusicBook: NSManagedObject {
         super.init(entity: entity, insertInto: context)
         
         // Dictionary
-        googleID = dictionary[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as? String
+        googleID = dictionary[GoogleClient.Constants.GoogleResponseKeys.GoogleID] as! String
         title = dictionary[GoogleClient.Constants.GoogleResponseKeys.Title] as? String
         subtitle = dictionary[GoogleClient.Constants.GoogleResponseKeys.Subtitle] as? String
         authors = dictionary[GoogleClient.Constants.GoogleResponseKeys.Authors] as? String

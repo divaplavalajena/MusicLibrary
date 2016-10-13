@@ -13,6 +13,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     @IBOutlet var addToLibraryTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
+    var results: [MusicBook]?
     
     lazy var sharedContext: NSManagedObjectContext = {
         // Get the stack
@@ -23,12 +24,27 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     @IBAction func scanBarcode(_ sender: AnyObject) {
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
-        performSegue(withIdentifier: "displayBarcodeReaderVC", sender: sender)
+        //performSegue(withIdentifier: "displayBarcodeReaderVC", sender: sender)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "BarcodeReaderViewController")
+        self.present(controller, animated: true, completion: nil)
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if Reachability.connectedToNetwork() == true {
+            print("Internet Connection Available!")
+        } else {
+            print("Internet Connection NOT Available!")
+            let alert = UIAlertController(title: "Internet Connection not available!", message: "Please connect and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+
         
         if fetchedResultsController.fetchedObjects?.count == 0 {
             print("********    ***********   FRC is empty  *******   ****************")
@@ -102,10 +118,34 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                         print(bookDictionary)
                         
                         DispatchQueue.main.async {
-                            _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
-                                let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
-                                self.saveToBothContexts()
-                                return book
+                            //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
+                            //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
+                            let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
+                            do {
+                                let results = try self.sharedContext.fetch(request) as! [MusicBook]
+
+                                //perform GoogleClient mapping into Core Data ready objects
+                                _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
+                                    let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
+                                    //googleID is primary key to test for existence in core data
+                                    let testGoogleID = book.googleID
+                                    //if results count is not zero
+                                    if results.count != 0 {
+                                        //where the googleID is equal or found, don't add to core data and delete from context to prevent saving
+                                        if results.contains(where: { $0.googleID == testGoogleID}) {
+                                            print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
+                                            print("Here is \(testGoogleID) that is equal to fetch.")
+                                            self.sharedContext.delete(book)
+                                            //where googleID is NOT equal or found, DO add to core data by saving the context.
+                                        } else if results.contains(where: { $0.googleID != testGoogleID}) {
+                                            print("This will save because fetch googleID is != to \(testGoogleID).")
+                                            self.saveToBothContexts()
+                                        }
+                                    }
+                                    return book
+                                }
+                            } catch let error as NSError {
+                                print("Fetch failed: \(error.localizedDescription)")
                             }
                         }
                     } else {
@@ -317,13 +357,6 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
             }
    
         }
-        
-        if segue.identifier! == "displayBarcodeReaderVC" {
-            if let barcodeReaderVC = segue.destination as? BarcodeReaderViewController {
-                barcodeReaderVC.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
-
     }
     
         

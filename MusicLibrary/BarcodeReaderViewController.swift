@@ -15,6 +15,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     //Properties:
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var results: [MusicBook]?
     
     lazy var sharedContext: NSManagedObjectContext = {
         // Get the stack
@@ -22,10 +23,10 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         let stack = delegate.stack
         return stack.context
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Create a session object.
         session = AVCaptureSession()
         
@@ -83,9 +84,20 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         
         session.startRunning()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if Reachability.connectedToNetwork() == true {
+            print("Internet Connection Available!")
+        } else {
+            print("Internet Connection NOT Available!")
+            let alert = UIAlertController(title: "Internet Connection not available!", message: "Please connect and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
         
         if (session?.isRunning == false) {
             session.startRunning()
@@ -109,7 +121,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         present(alert, animated: true, completion: nil)
         session = nil
     }
-
+    
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
         
         // Get the first object from the metadataObjects array.
@@ -151,16 +163,41 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error) in
                 //code to take array of dictionaries (bookDictionary) and init CoreData info
                 if let bookDictionary = bookDictionary {
-                
+                    
                     print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
                     print(bookDictionary)
                     
                     DispatchQueue.main.async {
-                        _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
-                            let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
-                            self.saveToBothContexts()
-                            return book
+                        //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
+                        //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
+                        let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
+                        do {
+                            let results = try self.sharedContext.fetch(request) as! [MusicBook]
+                            
+                            //perform GoogleClient mapping into Core Data ready objects
+                            _ = bookDictionary.map() { (dictionary: [String: AnyObject]) -> MusicBook in
+                                let book = MusicBook(dictionary: dictionary, context: self.sharedContext)
+                                //googleID is primary key to test for existence in core data
+                                let testGoogleID = book.googleID
+                                //if results count is not zero
+                                if results.count != 0 {
+                                    //where the googleID is equal or found, don't add to core data and delete from context to prevent saving
+                                    if results.contains(where: { $0.googleID == testGoogleID}) {
+                                        print("Not saving on BarcodeReaderVC to Core Data - GoogleID already exists in CoreData")
+                                        print("Here is \(testGoogleID) that is equal to fetch.")
+                                        self.sharedContext.delete(book)
+                                     //where googleID is NOT equal or found, DO add to core data by saving the context.
+                                    } else if results.contains(where: { $0.googleID != testGoogleID}) {
+                                        print("This will save because fetch googleID is != to \(testGoogleID).")
+                                        self.saveToBothContexts()
+                                    }
+                                }
+                                return book
+                            }
+                        } catch let error as NSError {
+                            print("Fetch failed: \(error.localizedDescription)")
                         }
+
                     }
                 } else {
                     print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
@@ -177,16 +214,16 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         let stack = (UIApplication.shared.delegate as! AppDelegate).stack
         stack.saveBothContexts()
     }
-
+    
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

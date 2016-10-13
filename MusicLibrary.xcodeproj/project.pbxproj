@@ -19,6 +19,7 @@
 		9C813B401DAC985B00D09314 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B3F1DAC985B00D09314 /* DetailViewController.swift */; };
 		9C813B441DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B421DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift */; };
 		9C813B461DAD57DF00D09314 /* LibraryCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B451DAD57DF00D09314 /* LibraryCellTableViewCell.swift */; };
+		9C813B491DAECD5A00D09314 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C813B481DAECD5A00D09314 /* Reachability.swift */; };
 		9CF23C241DA8121000AEF582 /* MyLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */; };
 		9CF23C261DA8146700AEF582 /* AddToLibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */; };
 		9CF23C281DA844A700AEF582 /* barcodeImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CF23C271DA844A700AEF582 /* barcodeImage.png */; };
@@ -69,6 +70,7 @@
 		9C813B3F1DAC985B00D09314 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9C813B421DACA3AB00D09314 /* MusicBook+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MusicBook+CoreDataProperties.swift"; path = "../MusicBook+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C813B451DAD57DF00D09314 /* LibraryCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCellTableViewCell.swift; sourceTree = "<group>"; };
+		9C813B481DAECD5A00D09314 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		9CF23C231DA8121000AEF582 /* MyLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C251DA8146700AEF582 /* AddToLibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToLibraryTableViewController.swift; sourceTree = "<group>"; };
 		9CF23C271DA844A700AEF582 /* barcodeImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = barcodeImage.png; path = Assets.xcassets/barcodeImage.png; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				9C192A5E1D9C6B1A00B6D77A /* AppDelegate.swift */,
+				9C813B481DAECD5A00D09314 /* Reachability.swift */,
 				9C192A901D9DA02300B6D77A /* Model */,
 				9C813B471DAD57EE00D09314 /* View */,
 				9C192A921D9DA04300B6D77A /* Controller */,
@@ -367,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C813B491DAECD5A00D09314 /* Reachability.swift in Sources */,
 				9C813B401DAC985B00D09314 /* DetailViewController.swift in Sources */,
 				9C192A8D1D9D9F5C00B6D77A /* GoogleClient.swift in Sources */,
 				9C192A5F1D9C6B1A00B6D77A /* AppDelegate.swift in Sources */,
