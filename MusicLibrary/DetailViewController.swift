@@ -32,9 +32,6 @@ class DetailViewController: UIViewController {
         self.configureView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        //self.configureView()
-    }
 
     //variable and method to compose and configure main view
     var detailItem: MusicBook? {

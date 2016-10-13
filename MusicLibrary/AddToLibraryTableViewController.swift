@@ -12,6 +12,7 @@ import CoreData
 
 class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var addToLibraryTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     var results: [MusicBook]?
@@ -24,6 +25,7 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         return stack.context
     }()
     
+    @IBOutlet var scanBarcodeOutlet: UIButton!
     @IBAction func scanBarcode(_ sender: AnyObject) {
         //Storyboard Segue in this button press modally to camera view (BarcodeReaderVC) to capture barcode image
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -37,6 +39,10 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.activityIndicator.isHidden = true
+        
+        scanBarcodeOutlet.isEnabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
         
         if Reachability.connectedToNetwork() == true {
             print("Internet Connection Available!")
@@ -111,6 +117,9 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                     print(bookDictionary)
                     
                     DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = false
+                        self.activityIndicator.startAnimating()
+                        
                         //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
                         //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
                         let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
@@ -134,22 +143,39 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                                     } else if results.contains(where: { $0.googleID != testGoogleID}) {
                                         print("This will save because fetch googleID is != to \(testGoogleID).")
                                         self.saveToBothContexts()
+                                        self.activityIndicator.stopAnimating()
+                                        self.activityIndicator.isHidden = true
                                     }
                                 }
                                 return book
                             }
                         } catch let error as NSError {
                             print("Fetch failed: \(error.localizedDescription)")
+                            self.errorInSearchAlert()
                         }
                     }
                 } else if zeroItemsFound == true {
                     print("Zero items were returned from search")
-                    self.zeroResultsFoundAlert()
+                    DispatchQueue.main.async {
+                        self.zeroResultsFoundAlert()
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                    }
+                    
                 } else {
                     print(error)
                     print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
+                    self.errorInSearchAlert()
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                    }
                 }
             })
+        }
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         }
     }
     
@@ -364,6 +390,8 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         let alert = UIAlertController(title: "Book not found!", message: "ISBN not found. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
             self.dismiss(animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -372,8 +400,21 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
         let alert = UIAlertController(title: "Book exists in library already.", message: "Please try another ISBN to add to your library.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
             self.dismiss(animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func errorInSearchAlert() {
+        let alert = UIAlertController(title: "Please try again.", message: "There was a network error with the search.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+            self.dismiss(animated: true, completion: nil)
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
     }
 
 }
@@ -385,7 +426,7 @@ extension AddToLibraryTableViewController: BarcodeReaderDelegate {
     //    "pass" info back here to AddToLibraryTVC
     func barcodeReaderDidFail() {
         //Zero Items Found - present Alert View Controller
-        print("bar code reader did complete")
+        print("BarcodeReader did complete but found ZERO results")
         zeroResultsFoundAlert()
     }
     
@@ -393,6 +434,13 @@ extension AddToLibraryTableViewController: BarcodeReaderDelegate {
         //Core Data determined the book is already in the library
         print("Book already in Core Data - See the library contents.")
         bookExistsAlert()
+        
+    }
+    
+    func errorInGoogleSearch() {
+        //Core Data determined the book is already in the library
+        print("There was an error with the network in searching.  Check numbers and try again.")
+        errorInSearchAlert()
         
     }
 }

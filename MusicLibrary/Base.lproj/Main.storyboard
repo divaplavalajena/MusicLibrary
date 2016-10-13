@@ -180,6 +180,11 @@ After loading the music book into your personal music library, simply tap on the
                                     <outlet property="delegate" destination="2aZ-tG-m2M" id="PAr-kq-a50"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VWa-tL-43G">
+                                <frame key="frameInset" minX="137" minY="83" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -197,7 +202,9 @@ After loading the music book into your personal music library, simply tap on the
                     </view>
                     <navigationItem key="navigationItem" id="esZ-ga-ijC"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="VWa-tL-43G" id="NIm-Gs-yBB"/>
                         <outlet property="addToLibraryTableView" destination="9hv-iu-u9N" id="Nj5-AB-jTG"/>
+                        <outlet property="scanBarcodeOutlet" destination="fFf-rX-Jex" id="kEd-hH-Yxz"/>
                         <outlet property="searchBar" destination="ZCZ-MP-wZF" id="MZq-Op-nop"/>
                         <segue destination="8Ux-Ip-EVa" kind="push" identifier="displayDetailVC" id="HDJ-xK-lYL"/>
                     </connections>
@@ -231,25 +238,31 @@ After loading the music book into your personal music library, simply tap on the
                                     <action selector="cancelButton:" destination="xVB-i4-IZj" eventType="touchUpInside" id="FLq-Xc-BvV"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syM-1y-gUh">
-                                <frame key="frameInset" minY="74" width="375" height="593"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="syM-1y-gUh">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tvv-4n-mKL"/>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="syM-1y-gUh" firstAttribute="bottom" secondItem="bV9-ok-wEb" secondAttribute="top" id="8AZ-kP-pcD"/>
+                            <constraint firstItem="tvv-4n-mKL" firstAttribute="centerX" secondItem="syM-1y-gUh" secondAttribute="centerX" id="Bi7-Qv-Eqk"/>
+                            <constraint firstItem="syM-1y-gUh" firstAttribute="leading" secondItem="Mc6-mO-wUw" secondAttribute="leading" id="CEO-Bf-fHh"/>
+                            <constraint firstItem="tvv-4n-mKL" firstAttribute="top" secondItem="esq-IK-KAP" secondAttribute="top" id="Qle-kg-baE"/>
+                            <constraint firstItem="syM-1y-gUh" firstAttribute="top" secondItem="esq-IK-KAP" secondAttribute="bottom" constant="8" symbolic="YES" id="SiS-L6-8Mh"/>
+                            <constraint firstAttribute="trailing" secondItem="syM-1y-gUh" secondAttribute="trailing" id="UKJ-8n-yQ7"/>
                             <constraint firstItem="esq-IK-KAP" firstAttribute="top" secondItem="17c-5R-r90" secondAttribute="bottom" constant="8" id="jkP-bO-L5h"/>
                             <constraint firstItem="esq-IK-KAP" firstAttribute="trailing" secondItem="Mc6-mO-wUw" secondAttribute="trailingMargin" id="yzt-i3-Bp6"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="tvv-4n-mKL" id="2UQ-Ik-iOD"/>
                         <outlet property="cameraView" destination="syM-1y-gUh" id="i3q-nd-JYp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIF-pz-bAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="1177.961019490255"/>
+            <point key="canvasLocation" x="2177" y="1140"/>
         </scene>
         <!--My Library Table View Controller-->
         <scene sceneID="drx-zs-dxg">

@@ -15,6 +15,8 @@ protocol BarcodeReaderDelegate {
     func barcodeReaderDidFail()
     
     func bookAlreadyInLibrary()
+    
+    func errorInGoogleSearch()
 }
 
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -33,6 +35,8 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     var previewLayer: AVCaptureVideoPreviewLayer!
     var results: [MusicBook]?
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     lazy var sharedContext: NSManagedObjectContext = {
         // Get the stack
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -42,6 +46,8 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.activityIndicator.isHidden = true
         
         // Create a session object.
         session = AVCaptureSession()
@@ -179,11 +185,14 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             GoogleClient.sharedInstance().getBookFromGoogleBySearchISBN(trimmedCode, completionHandlerForGoogleSearch: { (bookDictionary, error, zeroItemsFound) in
                 //code to take array of dictionaries (bookDictionary) and init CoreData info
                 if let bookDictionary = bookDictionary {
-                    
+
                     print("****  ****  ****Network calls to GoogleBooksAPI successful - here is the array of dictionaries.  ****  *****  ****")
                     print(bookDictionary)
                     
                     DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = false
+                        self.activityIndicator.startAnimating()
+                        
                         //create fetch of core data and compare to see if it already exists in core data so no duplicates are added
                         //Get fetch request before mapping GoogleClient info to Core Data for good baseline comparison
                         let request: NSFetchRequest<NSFetchRequestResult> = MusicBook.fetchRequest()
@@ -213,20 +222,36 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
                             }
                         } catch let error as NSError {
                             print("Fetch failed: \(error.localizedDescription)")
+                            self.delegate?.errorInGoogleSearch()
                         }
 
                     }
                 } else if zeroItemsFound == true {
                     print("Zero items were returned from search")
-                    self.delegate?.barcodeReaderDidFail()
-                    self.dismiss(animated: true, completion: {})
+                    DispatchQueue.main.async {
+                        self.delegate?.barcodeReaderDidFail()
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.dismiss(animated: true, completion: {})
+                    }
                     
                 }else {
                     print(error)
                     print("**** The error is in the GoogleClient method getting the book info from the API - in the barcodeDetected func.  ****")
+                    self.delegate?.errorInGoogleSearch()
+                    DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        //completionHandlerForGoogleSearch(nil, error, nil)
+                    }
                 }
+                
             })
-            self.dismiss(animated: true, completion: {})
+            DispatchQueue.main.async {
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                self.dismiss(animated: true, completion: {})
+            }
         }))
         self.present(alert, animated: true, completion: nil)
     }
