@@ -143,8 +143,10 @@ class AddToLibraryTableViewController: UIViewController, NSFetchedResultsControl
                                     } else if results.contains(where: { $0.googleID != testGoogleID}) {
                                         print("This will save because fetch googleID is != to \(testGoogleID).")
                                         self.saveToBothContexts()
-                                        self.activityIndicator.stopAnimating()
-                                        self.activityIndicator.isHidden = true
+                                        DispatchQueue.main.async {
+                                            self.activityIndicator.stopAnimating()
+                                            self.activityIndicator.isHidden = true
+                                        }
                                     }
                                 }
                                 return book
